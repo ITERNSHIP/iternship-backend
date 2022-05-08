@@ -4,7 +4,7 @@ import {  Repository } from 'typeorm';
 import { CompanyEntity } from '../entities/company.entity';
 import { CompanyViewRegis } from '../entities/companyViewRegis.entity';
 import { InternshipNewsEntity } from '../entities/internshipNews.entity';
-
+const bcrypt = require('bcrypt');
 
   
   export class CompanyService {
@@ -62,6 +62,21 @@ import { InternshipNewsEntity } from '../entities/internshipNews.entity';
         return {
           status: "success",
           message: "Deltete InternshipNews  Success",
+        };
+      } catch (err) {
+        return err;
+      }
+    }
+    async createCompanyStaff(cnstaff: CompanyEntity) {
+      try {
+        if (cnstaff == null) {
+          throw new NotAcceptableException();
+        } 
+        cnstaff.password = await bcrypt.hash(cnstaff.password, 10);
+        await this.companyRepository.save(cnstaff);
+        return {
+          status: "success",
+          message: "Crate CompanyStaff Success",
         };
       } catch (err) {
         return err;

@@ -36,5 +36,9 @@ export class CompanyController {
     return this.companyService.delete(id);
   }
 
+  @Post('/cnstaff')
+  createCnstaff(@Body() cnstaff: CompanyEntity): Promise<CompanyEntity> {
+    return this.companyService.createCompanyStaff(cnstaff);
+  }
 
 }

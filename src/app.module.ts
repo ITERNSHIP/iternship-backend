@@ -8,12 +8,13 @@ import { CompanyEntity } from './Apprenticeships/entities/company.entity';
 import { RegisterEntity } from './Apprenticeships/entities/regis.entity';
 import { StaffEntity } from './Apprenticeships/entities/staff.entity';
 import { UserEntity } from './Apprenticeships/entities/user.entity';
+import { AdminModule } from './Apprenticeships/module/admin.module';
 import { CompanyModule } from './Apprenticeships/module/company.module';
 import { typeOrmConfig } from './config/typeorm.config';
 
 @Module({
   imports: [UserEntity,AdminEntity,CompanyEntity,RegisterEntity,StaffEntity,TypeOrmModule.forRoot(typeOrmConfig)
-    ,UserModule,CompanyModule],
+    ,UserModule,CompanyModule,AdminModule],
   controllers: [AppController ],
   providers: [AppService],
 })

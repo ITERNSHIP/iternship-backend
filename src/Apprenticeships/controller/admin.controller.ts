@@ -1,6 +1,4 @@
-import { Controller, Delete, Get, Post, Put } from '@nestjs/common';
-import { Body, Param } from '@nestjs/common/decorators/http/route-params.decorator';
-import { UserEntity } from '../entities/user.entity';
+import { Controller, Delete, Get, Param, Post, Put } from '@nestjs/common';
 import { AdminService } from '../service/admin.service';
 
 
@@ -13,6 +11,12 @@ export class AdminController {
 //   create(@Body() user: UserEntity): Promise<UserEntity> {
 //     return this.adminService.create(user);
 //   }
+
+    @Get('/getcomById/:id')
+    async findOne(@Param('id') id) {
+    return this.adminService.findOne(id)
+
+    }
 
  
 }
