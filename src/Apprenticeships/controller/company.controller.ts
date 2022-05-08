@@ -31,10 +31,10 @@ export class CompanyController {
 //     return this.userService.update(user);
 //   }
 
-//   @Delete('/delete/:id')
-//   async delete(@Param('id') id): Promise<any> {
-//     return this.userService.delete(id);
-//   }
+  @Delete('/delete/:id')
+  async delete(@Param('id') id): Promise<any> {
+    return this.companyService.delete(id);
+  }
 
 
 }

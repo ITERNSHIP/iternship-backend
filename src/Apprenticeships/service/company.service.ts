@@ -50,5 +50,22 @@ import { InternshipNewsEntity } from '../entities/internshipNews.entity';
       return await this.InternshipNewsRepository.findByIds(newsId);
     }
 
+    async delete(id) {
+      try {
+        if (
+          this.InternshipNewsRepository.findByIds(id) == null ||
+          (await this.InternshipNewsRepository.findByIds(id)).length <= 0
+        ) {
+          throw new NotFoundException();
+        }
+        await this.InternshipNewsRepository.delete(id);
+        return {
+          status: "success",
+          message: "Deltete InternshipNews  Success",
+        };
+      } catch (err) {
+        return err;
+      }
+    }
   }
   
