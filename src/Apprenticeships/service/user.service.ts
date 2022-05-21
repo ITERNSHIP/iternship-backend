@@ -76,10 +76,11 @@ const result = await this.userRepository.findOneBy({
 
   async delete(id) {
     try {
-      if (
-        this.userRepository.findByIds(id) == null ||
-        (await this.userRepository.findByIds(id)).length <= 0
-      ) {
+      const result = await this.userRepository.findOneBy({
+        userId:id
+      })
+      
+      if (!result) {
         throw new NotFoundException();
       }
       await this.userRepository.delete(id);
