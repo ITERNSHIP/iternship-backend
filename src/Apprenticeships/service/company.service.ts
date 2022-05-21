@@ -41,13 +41,13 @@ const bcrypt = require('bcrypt');
     }
 
     async findOne(newsId) {
-      if (
-        this.InternshipNewsRepository.findByIds(newsId) == null ||
-        (await this.InternshipNewsRepository.findByIds(newsId)).length <= 0
-      ) {
+      const result = await this.InternshipNewsRepository.findOneBy({
+        newsId:newsId
+      })
+      if (!result) {
         throw new NotFoundException();
       }
-      return await this.InternshipNewsRepository.findByIds(newsId);
+      return result
     }
 
     async delete(id) {

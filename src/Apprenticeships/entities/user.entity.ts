@@ -4,8 +4,8 @@ import { RegisterEntity } from "./regis.entity";
 
 @Entity('users')
 export class UserEntity {
-  @PrimaryGeneratedColumn()
-  userId: number;
+  @PrimaryGeneratedColumn('uuid')
+  userId: string;
 
   @Column({ name: 'userName', nullable: false,unique:true })
   userName: string;

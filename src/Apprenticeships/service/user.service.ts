@@ -1,9 +1,11 @@
 import {
+  BadRequestException,
   ForbiddenException,
   Injectable,
   NotAcceptableException,
   NotFoundException,
 } from '@nestjs/common';
+import { JwtService } from '@nestjs/jwt';
 import { InjectRepository } from '@nestjs/typeorm';
 import {  Repository } from 'typeorm';
 import { ConfirmationEntity } from '../entities/confirmation.entity';
@@ -20,7 +22,8 @@ export class UserService {
     private regisRepository: Repository<RegisterEntity>,
 
     @InjectRepository(ConfirmationEntity)
-    private confirmationRepository: Repository<ConfirmationEntity>
+    private confirmationRepository: Repository<ConfirmationEntity>,
+    private jwtService: JwtService
   ) {}
 
   async create(user: UserEntity) {
@@ -45,13 +48,14 @@ export class UserService {
   }
 
   async findOne(userId) {
-    if (
-      this.userRepository.findByIds(userId) == null ||
-      (await this.userRepository.findByIds(userId)).length <= 0
-    ) {
+const result = await this.userRepository.findOneBy({
+  userId:userId
+})
+
+    if (!result) {
       throw new NotFoundException();
     }
-    return await this.userRepository.findByIds(userId);
+    return result
   }
 
   async update(user: UserEntity) {
@@ -118,14 +122,14 @@ export class UserService {
     
   }
   async findOneRegis(regisId) {
-    if (
-      this.regisRepository.findByIds(regisId) == null ||
-      (await this.regisRepository.findByIds(regisId)).length <= 0
-    ) {
+    const result = await this.regisRepository.findOneBy({
+      regisId:regisId
+    })
+    if (!result) {
       throw new NotFoundException();
     }
     // return this.regisRepository.createQueryBuilder("regis").leftJoinAndSelect('regis.user', 'user').where("regis.regisId = :id ",{id:regisId}).getMany()
-    return await this.regisRepository.find(regisId);
+    return result
   }
   async findAllRegis(): Promise<RegisterEntity[]> {
     return this.regisRepository.find();
@@ -149,13 +153,40 @@ export class UserService {
     return this.confirmationRepository.find();
   }
   async findOneconfirmationForm(confirmationId) {
-    if (
-      this.confirmationRepository.findByIds(confirmationId) == null ||
-      (await this.confirmationRepository.findByIds(confirmationId)).length <= 0
-    ) {
+    const result = await this.confirmationRepository.findOneBy({
+      confirmationId:confirmationId
+    })
+    if (!result) {
       throw new NotFoundException();
     }
     // return this.regisRepository.createQueryBuilder("regis").leftJoinAndSelect('regis.user', 'user').where("regis.regisId = :id ",{id:regisId}).getMany()
     return await this.confirmationRepository.find(confirmationId);
   }
+  async login(req:any,response:any){
+
+
+    const user = await this.userRepository.findOneBy(req.emai)
+    if (!user) {
+      throw new BadRequestException('invalid credentials');
+  }
+
+  if (!await bcrypt.compare(req.password, user.password)) {
+      throw new BadRequestException('invalid credentials');
+  }
+
+    const jwt = await this.jwtService.signAsync({id: user.userId},{secret:process.env.JWT_SECRET,expiresIn:'1d'});
+
+  response.cookie('jwt', jwt, {httpOnly: true});
+
+  return {
+      message: 'success'
+  };
+  }
+  async logout(response:any) {
+    response.clearCookie('jwt');
+
+    return {
+        message: 'success'
+    }
+}
 }

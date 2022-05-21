@@ -2,8 +2,8 @@ import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity('companys')
 export class CompanyEntity {
-  @PrimaryGeneratedColumn()
-  companyId: number;
+  @PrimaryGeneratedColumn('uuid')
+  companyId: string;
 
   @Column({ name: 'companyName', nullable: false  })
   companyName: string;

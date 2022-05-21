@@ -1,5 +1,5 @@
 import { Controller, Delete, Get, Post, Put } from '@nestjs/common';
-import { Body, Param } from '@nestjs/common/decorators/http/route-params.decorator';
+import { Body, Param,Response } from '@nestjs/common/decorators/http/route-params.decorator';
 import { ConfirmationEntity } from '../entities/confirmation.entity';
 import { RegisterEntity } from '../entities/regis.entity';
 import { UserEntity } from '../entities/user.entity';
@@ -22,13 +22,12 @@ export class UserController {
 
   @Get('/get/:id')
   async findOne(@Param('id') id) {
-  return this.userService.findOne(id);
+  return await this.userService.findOne(id);
 
 }
 
   @Put('/update/:id')
-  async update(@Param('id') id, @Body() user: UserEntity): Promise<any>{
-    user.userId = Number(id)
+  async update(@Param('id') id:string, @Body() user: UserEntity): Promise<any>{
     return this.userService.update(user);
   }
 
@@ -69,4 +68,12 @@ export class UserController {
   async findOneconfirmationForm(@Param('id') id) {
   return this.userService.findOneconfirmationForm(id);
 }
+  @Post('/login')
+  async login(@Body() req:any,   @Response({passthrough: true}) response: Response) {
+  return this.userService.login(req,response);
+  }  
+  @Post('/logout')
+  async logout(@Response({passthrough: true}) response: Response) {
+  return this.userService.logout(response);
+  }
 }
