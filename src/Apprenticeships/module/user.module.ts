@@ -8,7 +8,7 @@ import { ConfirmationEntity } from '../entities/confirmation.entity';
 import { RegisterEntity } from '../entities/regis.entity';
 import { StaffEntity } from '../entities/staff.entity';
 import { UserEntity } from '../entities/user.entity';
-import { LoggerMiddleware } from '../middlewares/user.middleware';
+import { UserMiddleware } from '../middlewares/user.middleware';
 import { UserService } from '../service/user.service';
 
 
@@ -22,7 +22,7 @@ import { UserService } from '../service/user.service';
 export class UserModule  implements NestModule {
   public configure(consumer: MiddlewareConsumer) {
     consumer
-      .apply(LoggerMiddleware)
+      .apply(UserMiddleware)
       .exclude({ path: 'users/login', method: RequestMethod.POST },
       { path: 'users/logout', method: RequestMethod.POST }
       )

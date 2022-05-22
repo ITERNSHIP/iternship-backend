@@ -1,4 +1,5 @@
-import { Controller, Delete, Get, Param, Post, Put } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Post, Put } from '@nestjs/common';
+import { AdminEntity } from '../entities/admin.entity';
 import { AdminService } from '../service/admin.service';
 
 
@@ -7,16 +8,27 @@ import { AdminService } from '../service/admin.service';
 export class AdminController {
   constructor(private adminService: AdminService){}
 
-//   @Post('/add')
-//   create(@Body() user: UserEntity): Promise<UserEntity> {
-//     return this.adminService.create(user);
-//   }
+  @Post('/add')
+  create(@Body() admin: AdminEntity): Promise<AdminEntity> {
+    return this.adminService.create(admin);
+  }
 
-    @Get('/getcomById/:id')
-    async findOne(@Param('id') id) {
-    return this.adminService.findOne(id)
+    @Get('/limitaccount/:id')
+    async limitAccount(@Param('id') id) {
+    return this.adminService.limitAccount(id)
 
     }
+
+    @Get('/getalladmin')
+    async findAll(): Promise<AdminEntity[]> {
+      return this.adminService.findAll();
+    }
+
+    @Get('/get/:id')
+    async findOne(@Param('id') id) {
+    return await this.adminService.findOne(id);
+  
+  }
 
  
 }

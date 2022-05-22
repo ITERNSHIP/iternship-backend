@@ -1,13 +1,14 @@
 import { HttpException, HttpStatus, Injectable, NestMiddleware } from '@nestjs/common';
 import { Request, Response, NextFunction } from 'express';
 import * as jwt from 'jsonwebtoken';
+import { AdminService } from '../service/admin.service';
 import { UserService } from '../service/user.service';
 
 
 @Injectable()
-export class UserMiddleware implements NestMiddleware {
+export class AdminMiddleware implements NestMiddleware {
     constructor(
-        private  userService: UserService,
+        private  adminService: AdminService,
         ) {}
         
     async use(req: Request, res: Response, next: NextFunction) {
@@ -15,7 +16,7 @@ export class UserMiddleware implements NestMiddleware {
         if (authHeaders && (authHeaders as string).split(' ')[1]) {
           const token = (authHeaders as string).split(' ')[1];
           const decoded: any = jwt.verify(token, process.env.JWT_SECRET);
-          const user = await this.userService.findOne(decoded.userId);
+          const user = await this.adminService.findOne(decoded.adminId);
     
           if (!user) {
             throw new HttpException('User not found.', HttpStatus.UNAUTHORIZED);
