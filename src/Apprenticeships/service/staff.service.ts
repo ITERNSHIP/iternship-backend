@@ -1,8 +1,6 @@
 import { BadRequestException, NotAcceptableException, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import {  Repository } from 'typeorm';
-import { AdminEntity } from '../entities/admin.entity';
-import { CompanyEntity } from '../entities/company.entity';
 import { StaffEntity } from '../entities/staff.entity';
 import { JwtService } from '@nestjs/jwt';
 const bcrypt = require('bcrypt');
@@ -10,8 +8,8 @@ const bcrypt = require('bcrypt');
   
   export class StaffService {
     constructor(
-      @InjectRepository(AdminEntity)
-      private   adminRepository:Repository<AdminEntity>,
+      @InjectRepository(StaffEntity)
+      private   staffRepository:Repository<StaffEntity>,
 
       private jwtService: JwtService
     ) {}
@@ -19,23 +17,23 @@ const bcrypt = require('bcrypt');
 //         return this.adminRepository.find();
 //       }
 
-//     async create(admin: AdminEntity) {
-//         try {
-//           if (admin == null) {
-//             throw new NotAcceptableException();
-//           } else  {
-//             admin.password = await bcrypt.hash(admin.password, 10);
-//             await this.adminRepository.save(admin);
-//             return {
-//               status: "success",
-//               message: "Crate Admin Success",
-//             };
-//           }
+    async create(staff: StaffEntity) {
+        try {
+          if (staff == null) {
+            throw new NotAcceptableException();
+          } else  {
+            staff.password = await bcrypt.hash(staff.password, 10);
+            await this.staffRepository.save(staff);
+            return {
+              status: "success",
+              message: "Crate Staff Success",
+            };
+          }
         
-//         } catch (err) {
-//           return err;
-//         }
-//       }
+        } catch (err) {
+          return err;
+        }
+      }
 //     async findOne(adminId) {
 //         const result = await this.adminRepository.findOneBy({
 //           adminId:adminId

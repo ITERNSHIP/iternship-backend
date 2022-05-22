@@ -1,17 +1,17 @@
 import { Body, Controller, Delete, Get, Param, Post, Put,Response } from '@nestjs/common';
-import { AdminEntity } from '../entities/admin.entity';
-import { AdminService } from '../service/admin.service';
+import { StaffEntity } from '../entities/staff.entity';
+import { StaffService } from '../service/staff.service';
 
 
 
 @Controller('staff')
 export class StaffController {
-//   constructor(private adminService: AdminService){}
+  constructor(private staffService: StaffService){}
 
-//   @Post('/add')
-//   create(@Body() admin: AdminEntity): Promise<AdminEntity> {
-//     return this.adminService.create(admin);
-//   }
+  @Post('/add')
+  create(@Body() staff: StaffEntity): Promise<StaffEntity> {
+    return this.staffService.create(staff);
+  }
 
 //     @Get('/limitaccount/:id')
 //     async limitAccount(@Param('id') id) {
