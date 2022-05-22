@@ -13,22 +13,16 @@ export class StaffController {
     return this.staffService.create(staff);
   }
 
-//     @Get('/limitaccount/:id')
-//     async limitAccount(@Param('id') id) {
-//     return this.adminService.limitAccount(id)
+    @Get('/getalladmin')
+    async findAll(): Promise<StaffEntity[]> {
+      return this.staffService.findAll();
+    }
 
-//     }
-
-//     @Get('/getalladmin')
-//     async findAll(): Promise<AdminEntity[]> {
-//       return this.adminService.findAll();
-//     }
-
-//     @Get('/get/:id')
-//     async findOne(@Param('id') id) {
-//     return await this.adminService.findOne(id);
+    @Get('/get/:id')
+    async findOne(@Param('id') id) {
+    return await this.staffService.findOne(id);
   
-//   }
+  }
 //   @Post('/login')
 //   async login(@Body() req:any,   @Response({passthrough: true}) response: Response) {
 //   return this.adminService.login(req,response);

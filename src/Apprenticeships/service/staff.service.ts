@@ -13,9 +13,9 @@ const bcrypt = require('bcrypt');
 
       private jwtService: JwtService
     ) {}
-//     async findAll(): Promise<AdminEntity[]> {
-//         return this.adminRepository.find();
-//       }
+    async findAll(): Promise<StaffEntity[]> {
+        return this.staffRepository.find();
+      }
 
     async create(staff: StaffEntity) {
         try {
@@ -34,16 +34,16 @@ const bcrypt = require('bcrypt');
           return err;
         }
       }
-//     async findOne(adminId) {
-//         const result = await this.adminRepository.findOneBy({
-//           adminId:adminId
-//         })
+    async findOne(staffId) {
+        const result = await this.staffRepository.findOneBy({
+          staffId:staffId
+        })
         
-//             if (!result) {
-//               throw new NotFoundException();
-//             }
-//             return result
-//           }
+            if (!result) {
+              throw new NotFoundException();
+            }
+            return result
+          }
 
 //     async limitAccount(id) {
 //         const obj =   await this.companyRepository.findOne(
