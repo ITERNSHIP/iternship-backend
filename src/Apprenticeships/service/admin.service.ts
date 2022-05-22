@@ -1,9 +1,10 @@
-import { NotAcceptableException, NotFoundException } from '@nestjs/common';
+import { BadRequestException, NotAcceptableException, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import {  Repository } from 'typeorm';
 import { AdminEntity } from '../entities/admin.entity';
 import { CompanyEntity } from '../entities/company.entity';
 import { StaffEntity } from '../entities/staff.entity';
+import { JwtService } from '@nestjs/jwt';
 const bcrypt = require('bcrypt');
 
   
@@ -17,6 +18,8 @@ const bcrypt = require('bcrypt');
 
       @InjectRepository(CompanyEntity)
       private companyRepository: Repository<CompanyEntity>,
+
+      private jwtService: JwtService
     ) {}
     async findAll(): Promise<AdminEntity[]> {
         return this.adminRepository.find();
@@ -64,6 +67,32 @@ else{
     this.companyRepository.save(obj)
 }        
       }
+      async login(req:any,response:any){
 
+
+        const admin = await this.adminRepository.findOneBy(req.emai)
+        if (!admin) {
+          throw new BadRequestException('invalid credentials');
+      }
+    
+      if (!await bcrypt.compare(req.password, admin.password)) {
+          throw new BadRequestException('invalid credentials');
+      }
+    
+        const jwt = await this.jwtService.signAsync({id: admin.adminId},{secret:process.env.JWT_SECRET,expiresIn:'1d'});
+    
+      response.cookie('jwt', jwt, {httpOnly: true});
+    
+      return {
+          message: 'success'
+      };
+      }
+      async logout(response:any) {
+        response.clearCookie('jwt');
+    
+        return {
+            message: 'success'
+        }
+    }
   }
   
