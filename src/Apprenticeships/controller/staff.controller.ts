@@ -13,7 +13,7 @@ export class StaffController {
     return this.staffService.create(staff);
   }
 
-    @Get('/getalladmin')
+    @Get('/getallstaff')
     async findAll(): Promise<StaffEntity[]> {
       return this.staffService.findAll();
     }
@@ -21,7 +21,6 @@ export class StaffController {
     @Get('/get/:id')
     async findOne(@Param('id') id) {
     return await this.staffService.findOne(id);
-  
   }
 //   @Post('/login')
 //   async login(@Body() req:any,   @Response({passthrough: true}) response: Response) {

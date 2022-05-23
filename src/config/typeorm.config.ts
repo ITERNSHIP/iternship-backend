@@ -10,5 +10,15 @@ export const typeOrmConfig: TypeOrmModuleOptions = {
   entities: ['dist/Apprenticeships/entities/*.js'],
   synchronize: true,
   logging:false
+  //
+  // type: 'postgres',
+  // host: '34.143.175.182',
+  // port: 5432,
+  // username:'itspostgres',
+  // password: 'ITSP@ssw0rd',
+  // database: 'apprenticeships',
+  // entities: ['dist/Apprenticeships/entities/*.js'],
+  // synchronize: true,
+  // logging:false
 };
 

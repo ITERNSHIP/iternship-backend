@@ -45,40 +45,25 @@ const bcrypt = require('bcrypt');
             return result
           }
 
-//     async limitAccount(id) {
-//         const obj =   await this.companyRepository.findOne(
-//             { where:
-//                 { companyId: id }
-//             })
-//         if(obj.status === false){
-//             obj.status = true
-//             this.companyRepository.save(obj)
-//         }
-// else{
-//     obj.status = false
-//     this.companyRepository.save(obj)
-// }        
-//       }
-//       async login(req:any,response:any){
 
-
-//         const admin = await this.adminRepository.findOneBy(req.emai)
-//         if (!admin) {
-//           throw new BadRequestException('invalid credentials');
-//       }
+      async login(req:any,response:any){
+        const staff = await this.staffRepository.findOneBy(req.emai)
+        if (!staff) {
+          throw new BadRequestException('invalid credentials');
+      }
     
-//       if (!await bcrypt.compare(req.password, admin.password)) {
-//           throw new BadRequestException('invalid credentials');
-//       }
+      if (!await bcrypt.compare(req.password, staff.password)) {
+          throw new BadRequestException('invalid credentials');
+      }
     
-//         const jwt = await this.jwtService.signAsync({id: admin.adminId},{secret:process.env.JWT_SECRET,expiresIn:'1d'});
+        const jwt = await this.jwtService.signAsync({id: staff.staffId},{secret:process.env.JWT_SECRET,expiresIn:'1d'});
     
-//       response.cookie('jwt', jwt, {httpOnly: true});
+      response.cookie('jwt', jwt, {httpOnly: true});
     
-//       return {
-//           message: 'success'
-//       };
-//       }
+      return {
+          message: 'success'
+      };
+      }
 //       async logout(response:any) {
 //         response.clearCookie('jwt');
     

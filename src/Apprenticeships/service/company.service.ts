@@ -82,5 +82,19 @@ const bcrypt = require('bcrypt');
         return err;
       }
     }
+    
+    async findAllCompanyStaff(): Promise<CompanyEntity[]> {
+      return this.companyRepository.find();
+    }
+
+    async findOneCompanyStaff(companyId) {
+      const result = await this.companyRepository.findOneBy({
+        companyId:companyId
+      })
+      if (!result) {
+        throw new NotFoundException();
+      }
+      return result
+    }
   }
   

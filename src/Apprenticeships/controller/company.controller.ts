@@ -24,6 +24,16 @@ export class CompanyController {
   return this.companyService.findOne(id);
 
 }
+@Get('/getAllCompanyStaff')
+async findAllCompanyStaff(): Promise<CompanyEntity[]> {
+  return this.companyService.findAllCompanyStaff();
+}
+
+@Get('/getCompanyStaffById/:id')
+async findOneCompanyStaff(@Param('id') id) {
+return this.companyService.findOneCompanyStaff(id);
+
+}
 
 //   @Put('/update/:id')
 //   async update(@Param('id') id, @Body() user: UserEntity): Promise<any>{
