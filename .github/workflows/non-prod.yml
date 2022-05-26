@@ -72,7 +72,7 @@ jobs:
         with:
           host: ${{ secrets.APP_HOST }}
           key: ${{ secrets.PRIVATE_KEY }}
-          command: |
+          script: |
             docker login -u ${{ secrets.DOCKER_HUB_USERNAME }} -p ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
             docker rmi iternship-back-end:latest
             docker pull ${{ secrets.DOCKER_HUB_USERNAME }}/iternship-back-end:latest
