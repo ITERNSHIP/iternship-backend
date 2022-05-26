@@ -70,7 +70,7 @@ jobs:
       - name: deploy with Execute SSH commmands on remote server
         uses: appleboy/ssh-action@master
         with:
-          hosts: ${{ secrets.APP_HOST }}
+          host: ${{ secrets.APP_HOST }}
           key: ${{ secrets.PRIVATE_KEY }}
           command: |
             docker login -u ${{ secrets.DOCKER_HUB_USERNAME }} -p ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
