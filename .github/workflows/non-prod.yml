@@ -68,18 +68,18 @@ jobs:
         uses: actions/checkout@v2
         
       - name: deploy with Execute SSH commmands on remote server
-        uses: JimCronqvist/action-ssh@0.1.1
+        uses: appleboy/ssh-action@master
         with:
           hosts: ${{ secrets.APP_HOST }}
-          privateKey: ${{ secrets.PRIVATE_KEY }}
+          key: ${{ secrets.PRIVATE_KEY }}
           command: |
             docker login -u ${{ secrets.DOCKER_HUB_USERNAME }} -p ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
-#            docker rmi iternship-back-end:latest
-#            docker pull ${{ secrets.DOCKER_HUB_USERNAME }}/iternship-back-end:latest
-#            docker images
-#            docker-compose -f ~/compose/docker-compose.back.yml down
-#            docker-compose -f ~/compose/docker-compose.back.yml up -d
-#            docker ps -a
+            docker rmi iternship-back-end:latest
+            docker pull ${{ secrets.DOCKER_HUB_USERNAME }}/iternship-back-end:latest
+            docker images
+            docker-compose -f ~/compose/docker-compose.back.yml down
+            docker-compose -f ~/compose/docker-compose.back.yml up -d
+            docker ps -a
 
   test:
       needs: deploy
