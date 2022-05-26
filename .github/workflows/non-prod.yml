@@ -1,0 +1,108 @@
+name: deploy-non-prd
+on:
+  push:
+    branches:
+      - FinalV1
+
+jobs:
+  code-scan:
+    runs-on: ubuntu-20.04
+    steps: 
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      # - name: SonarCloud Scan
+      #   uses: SonarSource/sonarcloud-github-action@v1.6
+      #   env:
+      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      #     SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+      #   with:
+      #     args: >
+      #       -Dsonar.organization=${{ secrets.SONAR_ORGANIZATION }}
+      #       -Dsonar.projectKey=${{ secrets.SONAR_PROJECTKEY }}
+
+  build:
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+      
+      - name: Login to Docker Hub
+        uses: docker/login-action@v1
+        with:
+          username: ${{ secrets.DOCKER_HUB_USERNAME }}
+          password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
+      
+      - name: Set up Docker Buildx
+        id: buildx
+        uses: docker/setup-buildx-action@v1
+      
+      - name : Create env file
+        run : |
+          touch .env
+          echo DB_URL=${{ secrets.DB_URL }} >> .env
+          echo ENTITY_PATH=${{ secrets.ENTITY_PATH }} >> .env
+          echo JWT_SECRET=${{ secrets.JWT_SECRET }} >> .env
+          echo DB_HOST_IP=${{ secrets.DB_HOST_IP }} >> .env
+          echo DB_PORT=${{ secrets.DB_PORT }} >> .env
+          echo DB_USR=${{ secrets.DB_USR }} >> .env
+          echo DB_PASS=${{ secrets.DB_PASS }} >> .env
+          echo DB=${{ secrets.DB_NAME }} >> .env
+          
+      - name: Build Docker image
+        run : docker build . --file Dockerfile --tag ${{ secrets.DOCKER_HUB_USERNAME }}/iternship-back-end:latest
+        
+      - name : Push Docker image to registry
+        run : |
+          docker images
+          docker push ${{ secrets.DOCKER_HUB_USERNAME }}/iternship-back-end:latest
+      
+      - name: Image digest
+        run: echo ${{ steps.docker_build.outputs.digest }}
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+        
+      - name: deploy with Execute SSH commmands on remote server
+        uses: JimCronqvist/action-ssh@0.1.1
+        with:
+          hosts: ${{ secrets.APP_HOST }}
+          privateKey: ${{ secrets.PRIVATE_KEY }}
+          command: |
+            docker login -u ${{ secrets.DOCKER_HUB_USERNAME }} -p ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
+            docker rmi iternship-back-end:latest
+            docker pull ${{ secrets.DOCKER_HUB_USERNAME }}/iternship-back-end:latest
+            docker images
+            docker-compose -f ~/compose/docker-compose.back.yml down
+            docker-compose -f ~/compose/docker-compose.back.yml up -d
+            docker ps -a
+
+  test:
+      needs: deploy
+      runs-on: ubuntu-20.04
+      steps:
+        - name: Set up Docker Buildx
+          uses: docker/setup-buildx-action@v1
+
+        - name: Anchore Container Scan
+          uses: anchore/scan-action@v3.0.0
+          id: scan
+          with:
+            image: "${{ secrets.DOCKER_HUB_USERNAME }}/iternship-back-end:latest"
+            fail-build: false
+            acs-report-enable: true
+
+        - name: upload Anchore scan SARIF report
+          uses: github/codeql-action/upload-sarif@v1
+          with:
+            sarif_file: ${{ steps.scan.outputs.sarif }}
+
+        - name: OWASP ZAP Baseline Scan
+          uses: zaproxy/action-baseline@v0.4.0
+          with:
+            token: ${{ secrets.GITHUB_TOKEN }}
+            target: 'https://api.iternship.net'
