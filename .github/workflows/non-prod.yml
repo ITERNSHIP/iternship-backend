@@ -74,12 +74,12 @@ jobs:
           privateKey: ${{ secrets.PRIVATE_KEY }}
           command: |
             docker login -u ${{ secrets.DOCKER_HUB_USERNAME }} -p ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
-            docker rmi iternship-back-end:latest
-            docker pull ${{ secrets.DOCKER_HUB_USERNAME }}/iternship-back-end:latest
-            docker images
-            docker-compose -f ~/compose/docker-compose.back.yml down
-            docker-compose -f ~/compose/docker-compose.back.yml up -d
-            docker ps -a
+#            docker rmi iternship-back-end:latest
+#            docker pull ${{ secrets.DOCKER_HUB_USERNAME }}/iternship-back-end:latest
+#            docker images
+#            docker-compose -f ~/compose/docker-compose.back.yml down
+#            docker-compose -f ~/compose/docker-compose.back.yml up -d
+#            docker ps -a
 
   test:
       needs: deploy
