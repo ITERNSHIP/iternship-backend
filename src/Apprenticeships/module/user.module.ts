@@ -19,14 +19,15 @@ import { UserService } from '../service/user.service';
 ],
   exports:[UserService]
 })
-export class UserModule  implements NestModule {
-  public configure(consumer: MiddlewareConsumer) {
-    consumer
-      .apply(UserMiddleware)
-      .exclude({ path: 'users/login', method: RequestMethod.POST },
-      { path: 'users/logout', method: RequestMethod.POST },
-      { path: 'users/add', method: RequestMethod.POST }
-      )
-      .forRoutes(UserController);
-  }
+export class UserModule  {
+// implements NestModule {
+//   public configure(consumer: MiddlewareConsumer) {
+//     consumer
+//       .apply(UserMiddleware)
+//       .exclude({ path: 'users/login', method: RequestMethod.POST },
+//       { path: 'users/logout', method: RequestMethod.POST },
+//       { path: 'users/add', method: RequestMethod.POST }
+//       )
+//       .forRoutes(UserController);
+//   }
 }

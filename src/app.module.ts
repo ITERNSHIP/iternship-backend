@@ -12,7 +12,6 @@ import { CompanyModule } from './Apprenticeships/module/company.module';
 import { StaffModule } from './Apprenticeships/module/staff.module';
 import { UserModule } from './Apprenticeships/module/user.module';
 import { typeOrmConfig } from './config/typeorm.config';
-
 @Module({
   imports: [UserEntity,AdminEntity,CompanyEntity,RegisterEntity,StaffEntity,TypeOrmModule.forRoot(typeOrmConfig)
     ,UserModule,CompanyModule,AdminModule,StaffModule],
