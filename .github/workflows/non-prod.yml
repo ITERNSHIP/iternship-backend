@@ -105,6 +105,17 @@ jobs:
         #   with:
         #     sarif_file: ${{ steps.scan.outputs.sarif }}
 
+        - name: Depcheck
+          uses: dependency-check/Dependency-Check_Action@main
+          id: Depcheck
+          with:
+            project: ${{ github.event.repository.name }}
+            path: '.'
+            format: 'HTML'    
+            args: >
+              --failOnCVSS 7
+              --enableRetired
+
         # - name: OWASP ZAP Baseline Scan
         #   uses: zaproxy/action-baseline@v0.7.0
         #   with:
