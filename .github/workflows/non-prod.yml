@@ -116,6 +116,12 @@ jobs:
               --failOnCVSS 7
               --enableRetired
 
+        - name: Upload Test results 
+          uses: actions/upload-artifact@master
+          with:
+            name: Depcheck report
+            path: ${{github.workspace}}/reports
+            
         # - name: OWASP ZAP Baseline Scan
         #   uses: zaproxy/action-baseline@v0.7.0
         #   with:
