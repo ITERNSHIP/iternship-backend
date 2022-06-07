@@ -2,7 +2,7 @@ name: deploy-non-prd
 on:
   push:
     branches:
-      - FinalV1
+      - dev
 
 jobs:
   code-scan:
