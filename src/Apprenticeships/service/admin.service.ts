@@ -70,7 +70,9 @@ else{
       async login(req:any,response:any){
 
 
-        const admin = await this.adminRepository.findOneBy(req.emai)
+        const admin = await this.adminRepository.findOneBy({
+          email:req.email
+        })
         if (!admin) {
           throw new BadRequestException('invalid credentials');
       }

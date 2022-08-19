@@ -166,7 +166,9 @@ const result = await this.userRepository.findOneBy({
   async login(req:any,response:any){
 
 
-    const user = await this.userRepository.findOneBy(req.emai)
+    const user = await this.userRepository.findOneBy({
+      email:req.email
+    })
     if (!user) {
       throw new BadRequestException('invalid credentials');
   }
@@ -190,4 +192,5 @@ const result = await this.userRepository.findOneBy({
         message: 'success'
     }
 }
+
 }

@@ -47,7 +47,9 @@ const bcrypt = require('bcrypt');
 
 
       async login(req:any,response:any){
-        const staff = await this.staffRepository.findOneBy(req.emai)
+        const staff = await this.staffRepository.findOneBy({
+          email:req.email
+        })
         if (!staff) {
           throw new BadRequestException('invalid credentials');
       }
@@ -64,12 +66,12 @@ const bcrypt = require('bcrypt');
           message: 'success'
       };
       }
-//       async logout(response:any) {
-//         response.clearCookie('jwt');
+      async logout(response:any) {
+        response.clearCookie('jwt');
     
-//         return {
-//             message: 'success'
-//         }
-//     }
+        return {
+            message: 'success'
+        }
+    }
   }
   

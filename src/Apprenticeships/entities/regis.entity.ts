@@ -40,6 +40,9 @@ export class RegisterEntity {
   @Column({ name: 'resume', nullable: false })
   resume: string;
 
+  @Column({ name: 'status', nullable: false,default:false })
+  status: boolean;
+  
   @ManyToOne(()=> UserEntity, user => user.regis,{onDelete:'CASCADE',eager:true,createForeignKeyConstraints: true})
   @JoinColumn()
   public user: UserEntity;

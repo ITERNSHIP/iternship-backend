@@ -9,18 +9,18 @@ export class InternshipNewsEntity {
   newstitle: string;
 
   @Column({ name: 'CompanyName', nullable: false })
-  CompanyName: string;
+  companyName: string;
 
   @Column({ name: 'newsDetail', nullable: false })
   newsDetail: string;
 
-  @Column({ name: 'position', nullable: false })
-  position: string;
+  // @Column({ name: 'position', nullable: false })
+  // position: string;
 
-  @Column({ name: 'income', nullable: false })
-  income: string;
+  // @Column({ name: 'income', nullable: false })
+  // income: string;
 
-  @Column({ name: 'longTerm', nullable: false,default:false })
-  longTerm: string;
+  // @Column({ name: 'longTerm', nullable: false,default:false })
+  // longTerm: string;
 
 }
