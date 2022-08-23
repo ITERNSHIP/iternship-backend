@@ -3,6 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import {  Repository } from 'typeorm';
 import { StaffEntity } from '../entities/staff.entity';
 import { JwtService } from '@nestjs/jwt';
+import { RegisterEntity } from '../entities/regis.entity';
 const bcrypt = require('bcrypt');
 
   
@@ -10,6 +11,9 @@ const bcrypt = require('bcrypt');
     constructor(
       @InjectRepository(StaffEntity)
       private   staffRepository:Repository<StaffEntity>,
+
+      @InjectRepository(RegisterEntity)
+      private regisRepository: Repository<RegisterEntity>,
 
       private jwtService: JwtService
     ) {}
@@ -34,17 +38,29 @@ const bcrypt = require('bcrypt');
           return err;
         }
       }
+
     async findOne(staffId) {
         const result = await this.staffRepository.findOneBy({
           staffId:staffId
         })
-        
             if (!result) {
               throw new NotFoundException();
             }
             return result
           }
-
+          async findOneRegis(regisId) {
+            const result = await this.regisRepository.findOneBy({
+              regisId:regisId
+            })
+            if (!result) {
+              throw new NotFoundException();
+            }
+            // return this.regisRepository.createQueryBuilder("regis").leftJoinAndSelect('regis.user', 'user').where("regis.regisId = :id ",{id:regisId}).getMany()
+            return result
+          }
+          async findAllRegis(): Promise<RegisterEntity[]> {
+            return this.regisRepository.find();
+          }
 
       async login(req:any,response:any){
         const staff = await this.staffRepository.findOneBy({

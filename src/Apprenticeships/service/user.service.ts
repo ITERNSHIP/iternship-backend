@@ -9,6 +9,7 @@ import { JwtService } from '@nestjs/jwt';
 import { InjectRepository } from '@nestjs/typeorm';
 import {  Repository } from 'typeorm';
 import { ConfirmationEntity } from '../entities/confirmation.entity';
+import { RecruitingEntity } from '../entities/recruiting.enity';
 import { RegisterEntity } from '../entities/regis.entity';
 import { UserEntity } from '../entities/user.entity';
 const bcrypt = require('bcrypt');
@@ -23,6 +24,8 @@ export class UserService {
 
     @InjectRepository(ConfirmationEntity)
     private confirmationRepository: Repository<ConfirmationEntity>,
+    @InjectRepository(RecruitingEntity)
+    private RecruitingRepository: Repository<RecruitingEntity>,
     private jwtService: JwtService
   ) {}
 
@@ -163,9 +166,21 @@ const result = await this.userRepository.findOneBy({
     // return this.regisRepository.createQueryBuilder("regis").leftJoinAndSelect('regis.user', 'user').where("regis.regisId = :id ",{id:regisId}).getMany()
     return await this.confirmationRepository.find(confirmationId);
   }
+  async findAllRecruit(): Promise<RecruitingEntity[]> {
+    return this.RecruitingRepository.find();
+  }
+
+  async findOneRecruit(recruitId) {
+    const result = await this.RecruitingRepository.findOneBy({
+      recruitId:recruitId
+    })
+    if (!result) {
+      throw new NotFoundException();
+    }
+    return result
+  }
+
   async login(req:any,response:any){
-
-
     const user = await this.userRepository.findOneBy({
       email:req.email
     })

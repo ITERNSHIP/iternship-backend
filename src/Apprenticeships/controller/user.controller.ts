@@ -1,6 +1,7 @@
 import { Controller, Delete, Get, Post, Put } from '@nestjs/common';
 import { Body, Param,Response } from '@nestjs/common/decorators/http/route-params.decorator';
 import { ConfirmationEntity } from '../entities/confirmation.entity';
+import { RecruitingEntity } from '../entities/recruiting.enity';
 import { RegisterEntity } from '../entities/regis.entity';
 import { UserEntity } from '../entities/user.entity';
 import { UserService } from '../service/user.service';
@@ -68,6 +69,16 @@ export class UserController {
   async findOneconfirmationForm(@Param('id') id) {
   return this.userService.findOneconfirmationForm(id);
 }
+@Get('/getAllRecruit')
+async findAllRecruit(): Promise<RecruitingEntity[]> {
+  return this.userService.findAllRecruit();
+}
+
+@Get('/getRecruitById/:id')
+async findOneRecruit(@Param('id') id) {
+return this.userService.findOneRecruit(id);
+}
+
   @Post('/login')
   async login(@Body() req:any,   @Response({passthrough: true}) response: Response) {
   return this.userService.login(req,response);
