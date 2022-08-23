@@ -9,6 +9,7 @@ import { JwtService } from '@nestjs/jwt';
 import { InjectRepository } from '@nestjs/typeorm';
 import {  Repository } from 'typeorm';
 import { ConfirmationEntity } from '../entities/confirmation.entity';
+import { InternshipNewsEntity } from '../entities/internshipNews.entity';
 import { RecruitingEntity } from '../entities/recruiting.enity';
 import { RegisterEntity } from '../entities/regis.entity';
 import { UserEntity } from '../entities/user.entity';
@@ -26,6 +27,8 @@ export class UserService {
     private confirmationRepository: Repository<ConfirmationEntity>,
     @InjectRepository(RecruitingEntity)
     private RecruitingRepository: Repository<RecruitingEntity>,
+    @InjectRepository(InternshipNewsEntity)
+    private InternshipNewsRepository: Repository<InternshipNewsEntity>,
     private jwtService: JwtService
   ) {}
 
@@ -179,7 +182,20 @@ const result = await this.userRepository.findOneBy({
     }
     return result
   }
+  async findAllNews(): Promise<InternshipNewsEntity[]> {
+    return this.InternshipNewsRepository.find();
+  }
 
+  async findOneNews(newsId) {
+    const result = await this.InternshipNewsRepository.findOneBy({
+      newsId:newsId
+    })
+    if (!result) {
+      throw new NotFoundException();
+    }
+    return result
+  }
+  
   async login(req:any,response:any){
     const user = await this.userRepository.findOneBy({
       email:req.email

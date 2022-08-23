@@ -5,6 +5,7 @@ import { UserController } from '../controller/user.controller';
 import { AdminEntity } from '../entities/admin.entity';
 import { CompanyEntity } from '../entities/company.entity';
 import { ConfirmationEntity } from '../entities/confirmation.entity';
+import { InternshipNewsEntity } from '../entities/internshipNews.entity';
 import { RecruitingEntity } from '../entities/recruiting.enity';
 import { RegisterEntity } from '../entities/regis.entity';
 import { StaffEntity } from '../entities/staff.entity';
@@ -17,7 +18,7 @@ import { UserService } from '../service/user.service';
   controllers: [UserController],
   providers: [UserService,JwtService],
   imports:[TypeOrmModule.forFeature([UserEntity,AdminEntity,CompanyEntity,RegisterEntity,
-    StaffEntity,ConfirmationEntity,RecruitingEntity])
+    StaffEntity,ConfirmationEntity,RecruitingEntity,InternshipNewsEntity])
 ],
   exports:[UserService]
 })

@@ -1,6 +1,7 @@
 import { Controller, Delete, Get, Post, Put } from '@nestjs/common';
 import { Body, Param,Response } from '@nestjs/common/decorators/http/route-params.decorator';
 import { ConfirmationEntity } from '../entities/confirmation.entity';
+import { InternshipNewsEntity } from '../entities/internshipNews.entity';
 import { RecruitingEntity } from '../entities/recruiting.enity';
 import { RegisterEntity } from '../entities/regis.entity';
 import { UserEntity } from '../entities/user.entity';
@@ -79,12 +80,23 @@ async findOneRecruit(@Param('id') id) {
 return this.userService.findOneRecruit(id);
 }
 
-  @Post('/login')
-  async login(@Body() req:any,   @Response({passthrough: true}) response: Response) {
-  return this.userService.login(req,response);
-  }  
-  @Post('/logout')
-  async logout(@Response({passthrough: true}) response: Response) {
-  return this.userService.logout(response);
-  }
+@Get('/getAllNews')
+async findAllNews(): Promise<InternshipNewsEntity[]> {
+  return this.userService.findAllNews();
+}
+
+@Get('/getNewsById/:id')
+async findOneNews(@Param('id') id) {
+return this.userService.findOneNews(id);
+
+}
+@Post('/login')
+async login(@Body() req:any,   @Response({passthrough: true}) response: Response) {
+return this.userService.login(req,response);
+}  
+@Post('/logout')
+async logout(@Response({passthrough: true}) response: Response) {
+return this.userService.logout(response);
+}
+
 }
