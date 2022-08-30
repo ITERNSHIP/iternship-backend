@@ -83,7 +83,7 @@ else{
     
         const jwt = await this.jwtService.signAsync({id: admin.adminId},{secret:process.env.JWT_SECRET,expiresIn:'1d'});
     
-      response.cookie('jwt', jwt, {httpOnly: true});
+      response.cookie('jwt', jwt);
     
       return {
           message: 'success'

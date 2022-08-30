@@ -1,4 +1,5 @@
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, PrimaryGeneratedColumn,OneToMany,JoinColumn  } from "typeorm";
+import { RecruitingEntity } from "./recruiting.enity";
 
 @Entity('companys')
 export class CompanyEntity {
@@ -22,5 +23,9 @@ export class CompanyEntity {
   
   @Column({ nullable: true })
   imageName: string;
+
+  @OneToMany(() => RecruitingEntity,recruit => recruit.company,{createForeignKeyConstraints: true})
+  @JoinColumn()
+  public recruit:RecruitingEntity[];
 
 }

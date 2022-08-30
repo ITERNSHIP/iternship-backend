@@ -210,7 +210,7 @@ const result = await this.userRepository.findOneBy({
 
     const jwt = await this.jwtService.signAsync({id: user.userId},{secret:process.env.JWT_SECRET,expiresIn:'1d'});
 
-  response.cookie('jwt', jwt, {httpOnly: true});
+  response.cookie('jwt', jwt);
 
   return {
       message: 'success'

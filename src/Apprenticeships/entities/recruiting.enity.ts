@@ -1,4 +1,5 @@
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, PrimaryGeneratedColumn,ManyToOne,JoinColumn } from "typeorm";
+import { CompanyEntity } from "./company.entity";
 
 @Entity('recruiting')
 export class RecruitingEntity {
@@ -22,5 +23,9 @@ export class RecruitingEntity {
 
   @Column({ name: 'longTerm', nullable: false })
   longTerm: string;
+
+  @ManyToOne(()=> CompanyEntity, company => company.recruit,{onDelete:'CASCADE',eager:true,createForeignKeyConstraints: true})
+  @JoinColumn()
+  public company: CompanyEntity;
 
 }
