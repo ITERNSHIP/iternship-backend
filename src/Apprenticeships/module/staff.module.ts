@@ -5,6 +5,7 @@ import { JwtService } from '@nestjs/jwt';
 import { StaffController } from '../controller/staff.controller';
 import { StaffService } from '../service/staff.service';
 import { RegisterEntity } from '../entities/regis.entity';
+import { StaffMiddleware } from '../middlewares/staff.middleware';
 
 
 
@@ -14,6 +15,16 @@ import { RegisterEntity } from '../entities/regis.entity';
   imports:[TypeOrmModule.forFeature([StaffEntity,RegisterEntity])],
   exports:[StaffService]
 })
-export class StaffModule   {
+export class StaffModule   
+implements NestModule {
+  public configure(consumer: MiddlewareConsumer) {
+    consumer
+      .apply(StaffMiddleware)
+      .exclude({ path: 'staff/login', method: RequestMethod.POST },
+      { path: 'staff/logout', method: RequestMethod.POST },
+      { path: 'staff/add', method: RequestMethod.POST }
+      )
+      .forRoutes(StaffController);
+  }
 
 }
