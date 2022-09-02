@@ -22,7 +22,15 @@ export class CompanyController {
   async findAll(): Promise<InternshipNewsEntity[]> {
     return this.companyService.findAllNews();
   }
-
+  @Post('/findAllNewsbyCompany')
+  async findAllNewsbyCompany(@Body() request: any) {
+    return this.companyService.findAllNewsbyCompany(request.companyName);
+  }
+  @Post('/findCompanyDetailByName')
+  async findCompanyDetailByName(@Body() request: any) {
+    return this.companyService.findCompanyDetailByName(request.companyName);
+  }
+  
   @Get('/getNewsById/:id')
   async findOne(@Param('id') id) {
   return this.companyService.findOneNews(id);
@@ -39,11 +47,10 @@ return this.companyService.findOneCompanyStaff(id);
 
 }
 
-//   @Put('/update/:id')
-//   async update(@Param('id') id, @Body() user: UserEntity): Promise<any>{
-//     user.userId = Number(id)
-//     return this.userService.update(user);
-//   }
+  @Put('/update/:id')
+  async updateCompanyStaff(@Param('id') id, @Body() company: any){
+    return this.companyService.updateCompanyStaff(company);
+  }
 
   @Delete('/delete/:id')
   async delete(@Param('id') id): Promise<any> {

@@ -8,7 +8,7 @@ export class InternshipNewsEntity {
   @Column({ name: 'title', nullable: false  })
   newstitle: string;
 
-  @Column({ name: 'CompanyName', nullable: false })
+  @Column({ name: 'companyName', nullable: false })
   companyName: string;
 
   @Column({ name: 'newsDetail', nullable: false })

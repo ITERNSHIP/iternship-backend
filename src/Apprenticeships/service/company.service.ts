@@ -45,6 +45,12 @@ const bcrypt = require('bcrypt');
     async findAllNews(): Promise<InternshipNewsEntity[]> {
       return this.InternshipNewsRepository.find();
     }
+    async findAllNewsbyCompany(companyName:any) {
+      console.log(companyName)
+      let statement:string =`select * from internshipnews where "companyName" = '${companyName}'`
+      const result = await  this.InternshipNewsRepository.query(statement)
+      return result
+    }
 
     async findOneNews(newsId) {
       const result = await this.InternshipNewsRepository.findOneBy({
@@ -88,6 +94,22 @@ const bcrypt = require('bcrypt');
         return err;
       }
     }
+    async updateCompanyStaff(company: any) {
+      try {
+        if (!company.companyId) {
+          throw new ForbiddenException();
+        }
+        console.log(company)
+        company.password = await bcrypt.hash(company.password, 10);
+        await this.companyRepository.update(company.companyId, company);
+        return {
+          status: "success",
+          message: "Update Success",
+        };
+      } catch (err) {
+        return err;
+      }
+    }
     
     async findAllCompanyStaff(): Promise<CompanyEntity[]> {
       return this.companyRepository.find();
@@ -97,6 +119,16 @@ const bcrypt = require('bcrypt');
       const result = await this.companyRepository.findOneBy({
         companyId:companyId
       })
+      if (!result) {
+        throw new NotFoundException();
+      }
+      return result
+    }
+    async findCompanyDetailByName(companyName) {
+      console.log(companyName)
+      const result = await this.companyRepository.createQueryBuilder("companys").select("companys.companyDetail")
+      .where("companys.companyName = :companyName", { companyName: companyName }).getMany()
+      console.log(result)
       if (!result) {
         throw new NotFoundException();
       }
@@ -160,7 +192,6 @@ const bcrypt = require('bcrypt');
       const user = await this.companyRepository.findOneBy({
         email:req.email
       })
-      console.log(user)
       if (!user) {
         throw new BadRequestException('invalid credentials');
     }
@@ -174,7 +205,8 @@ const bcrypt = require('bcrypt');
     response.cookie('jwt', jwt);
   
     return {
-        message: 'success'
+        message: 'success',
+        companyName:user.companyName
     };
     }
     async logout(response:any) {
