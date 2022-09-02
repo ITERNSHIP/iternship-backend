@@ -7,6 +7,7 @@ import { RecruitingEntity } from '../entities/recruiting.enity';
 import { CompanyService } from '../service/company.service';
 import { diskStorage } from 'multer';
 import { editFileName, imageFileFilter } from 'src/utils/file-uploading.utils';
+import { request } from 'http';
 
 
 @Controller('company')
@@ -30,12 +31,20 @@ export class CompanyController {
   async findCompanyDetailByName(@Body() request: any) {
     return this.companyService.findCompanyDetailByName(request.companyName);
   }
-  
+  @Post('/updateCompanyDetailById/:id')
+  async updateCompanyDetailById(@Param('id') id,@Body() request: any) {
+    return this.companyService.updateCompanyDetailById(id,request);
+  }
   @Get('/getNewsById/:id')
   async findOne(@Param('id') id) {
   return this.companyService.findOneNews(id);
-
 }
+@Put('/updateNews/:id')
+async updateInternshipNews(@Param('id') id:any, @Body() news: InternshipNewsEntity): Promise<any>{
+  news.newsId = id
+  return this.companyService.updateInternshipNews(news);
+}
+
 @Get('/getAllCompanyStaff')
 async findAllCompanyStaff(): Promise<CompanyEntity[]> {
   return this.companyService.findAllCompanyStaff();
@@ -83,6 +92,11 @@ return this.companyService.findOneCompanyStaff(id);
   async findOneRecruit(@Param('id') id) {
   return this.companyService.findOneRecruit(id);
 }
+@Get('/findRecruitByCompanyName')
+async findRecruitByCompanyName(@Body() request: any) {
+  return this.companyService.findRecruitByCompanyId(request.companyId);
+}
+
 @Post('/uploadOne/:id')
 @UseInterceptors(
   FileInterceptor('image', {

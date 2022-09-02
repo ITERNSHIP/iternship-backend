@@ -62,6 +62,20 @@ const bcrypt = require('bcrypt');
       return result
     }
 
+    async updateInternshipNews(news: any) {
+      const result = await this.InternshipNewsRepository.findOneBy({
+        newsId:news.newsId
+      })
+        if (!result) {
+          throw new ForbiddenException();
+        }
+        await this.InternshipNewsRepository.update(news.newsId, news);
+        return {
+          status: "success",
+          message: "Update Success",
+        };
+    }
+    
     async deleteNews(id) {
       try {
         if (
@@ -99,7 +113,6 @@ const bcrypt = require('bcrypt');
         if (!company.companyId) {
           throw new ForbiddenException();
         }
-        console.log(company)
         company.password = await bcrypt.hash(company.password, 10);
         await this.companyRepository.update(company.companyId, company);
         return {
@@ -110,7 +123,21 @@ const bcrypt = require('bcrypt');
         return err;
       }
     }
-    
+    async updateCompanyDetailById(id:any,request: any) {
+        if (
+          this.companyRepository.findByIds(id) == null ||
+          (await this.companyRepository.findByIds(id)).length <= 0
+        ) {
+          throw new NotFoundException();
+        }
+        await this.companyRepository.createQueryBuilder().update(CompanyEntity).set({companyDetail: request.companyDetail})
+        .where("companyId = :id", {id : id}).execute()
+        return {
+          status: "success",
+          message: "Update Success"
+        };
+    }
+
     async findAllCompanyStaff(): Promise<CompanyEntity[]> {
       return this.companyRepository.find();
     }
@@ -125,10 +152,8 @@ const bcrypt = require('bcrypt');
       return result
     }
     async findCompanyDetailByName(companyName) {
-      console.log(companyName)
       const result = await this.companyRepository.createQueryBuilder("companys").select("companys.companyDetail")
       .where("companys.companyName = :companyName", { companyName: companyName }).getMany()
-      console.log(result)
       if (!result) {
         throw new NotFoundException();
       }
@@ -162,6 +187,7 @@ const bcrypt = require('bcrypt');
           message: "Update Success",
         };
     }
+
     async deleteRecruiting(id:any) {
         const result = await this.RecruitingRepository.findOneBy({
           recruitId:id
@@ -188,6 +214,15 @@ const bcrypt = require('bcrypt');
       }
       return result
     }
+    async findRecruitByCompanyId(companyId) {
+      console.log(companyId)
+      const result = await this.RecruitingRepository.createQueryBuilder("recruiting").select()
+      .where("recruiting.companyCompanyId = :companyCompanyId", { companyCompanyId: companyId }).getMany()
+      if (!result) {
+        throw new NotFoundException();
+      }
+      return result
+    }
     async login(req:any,response:any){
       const user = await this.companyRepository.findOneBy({
         email:req.email
@@ -206,6 +241,7 @@ const bcrypt = require('bcrypt');
   
     return {
         message: 'success',
+        companyId:user.companyId,
         companyName:user.companyName
     };
     }
