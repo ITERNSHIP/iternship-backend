@@ -30,7 +30,7 @@ const bcrypt = require('bcrypt');
             await this.staffRepository.save(staff);
             return {
               status: "success",
-              message: "Crate Staff Success",
+              message: "Create Staff Success",
             };
           }
         

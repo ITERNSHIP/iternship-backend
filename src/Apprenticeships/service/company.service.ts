@@ -35,7 +35,7 @@ const bcrypt = require('bcrypt');
         await this.InternshipNewsRepository.save(news);
         return {
           status: "success",
-          message: "Crate InternshipNews Success",
+          message: "Create InternshipNews Success",
         };
       } catch (err) {
         return err;
@@ -87,7 +87,7 @@ const bcrypt = require('bcrypt');
         await this.InternshipNewsRepository.delete(id);
         return {
           status: "success",
-          message: "Deltete InternshipNews  Success",
+          message: "Delete InternshipNews  Success",
         };
       } catch (err) {
         return err;
@@ -102,7 +102,7 @@ const bcrypt = require('bcrypt');
         await this.companyRepository.save(cnstaff);
         return {
           status: "success",
-          message: "Crate CompanyStaff Success",
+          message: "Create CompanyStaff Success",
         };
       } catch (err) {
         return err;
@@ -168,7 +168,7 @@ const bcrypt = require('bcrypt');
         await this.RecruitingRepository.save(recruiting);
         return {
           status: "success",
-          message: "Crate Recruit Success",
+          message: "Create Recruit Success",
         };
       } catch (err) {
         return err;
@@ -198,7 +198,7 @@ const bcrypt = require('bcrypt');
         await this.RecruitingRepository.delete(id);
         return {
           status: "success",
-          message: "Deltete Recruit  Success",
+          message: "Delete Recruit  Success",
         };
       
     } async findAllRecruit(): Promise<RecruitingEntity[]> {

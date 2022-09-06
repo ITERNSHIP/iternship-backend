@@ -34,7 +34,7 @@ const bcrypt = require('bcrypt');
             await this.adminRepository.save(admin);
             return {
               status: "success",
-              message: "Crate Admin Success",
+              message: "Create Admin Success",
             };
           }
         

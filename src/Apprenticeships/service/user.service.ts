@@ -43,7 +43,7 @@ export class UserService {
       await this.userRepository.save(user);
       return {
         status: "success",
-        message: "Crate User Success",
+        message: "Create User Success",
       };
     } catch (err) {
       return err;
@@ -92,7 +92,7 @@ const result = await this.userRepository.findOneBy({
       await this.userRepository.delete(id);
       return {
         status: "success",
-        message: "Deltete User  Success",
+        message: "Delete User  Success",
       };
     } catch (err) {
       return err;
@@ -106,7 +106,7 @@ const result = await this.userRepository.findOneBy({
       await this.regisRepository.save(regis);
       return {
         status: "success",
-        message: "Crate RegisterForm Success",
+        message: "Create RegisterForm Success",
       };
     } catch (err) {
       return err;
@@ -123,7 +123,7 @@ const result = await this.userRepository.findOneBy({
       await this.regisRepository.delete(id);
        return {
         status: "success",
-        message: "Deltete RegisterForm  Success",
+        message: "Delete RegisterForm  Success",
       };
       }
     
@@ -150,7 +150,7 @@ const result = await this.userRepository.findOneBy({
     await this.confirmationRepository.save(confirmation)
       return {
         status: "success",
-        message: "Crate ConfirmationForm Success",
+        message: "Create ConfirmationForm Success",
       };
     } catch (err) {
       return err;
