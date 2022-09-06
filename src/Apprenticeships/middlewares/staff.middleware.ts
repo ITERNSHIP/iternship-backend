@@ -21,6 +21,7 @@ export class StaffMiddleware implements NestMiddleware {
           if (!user) {
             throw new HttpException('User not found.', HttpStatus.UNAUTHORIZED);
           }
+          
     
           req.user = user;
           next();

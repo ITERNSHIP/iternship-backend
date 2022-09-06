@@ -1,4 +1,4 @@
-import { HttpException, HttpStatus, Injectable, NestMiddleware } from '@nestjs/common';
+import { ForbiddenException, HttpException, HttpStatus, Injectable, NestMiddleware } from '@nestjs/common';
 import { Request, Response, NextFunction } from 'express';
 import * as jwt from 'jsonwebtoken';
 import { CompanyService } from '../service/company.service';
@@ -18,7 +18,9 @@ export class CompanyMiddleware implements NestMiddleware {
           const token = (authHeaders as string).split(' ')[1];
           const decoded: any = jwt.verify(token, process.env.JWT_SECRET);
           const user = await this.companyService.findOneCompanyStaff(decoded.companyId);
-    
+          //if(user.role != 'Staff'){
+            //throw new ForbiddenException('Role Incorect')
+          //}
           if (!user) {
             throw new HttpException('CompanyStaff not found.', HttpStatus.UNAUTHORIZED);
           }
