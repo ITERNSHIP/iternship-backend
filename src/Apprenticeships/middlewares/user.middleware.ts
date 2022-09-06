@@ -1,4 +1,4 @@
-import { HttpException, HttpStatus, Injectable, NestMiddleware } from '@nestjs/common';
+import { ForbiddenException, HttpException, HttpStatus, Injectable, NestMiddleware } from '@nestjs/common';
 import { Request, Response, NextFunction } from 'express';
 import * as jwt from 'jsonwebtoken';
 import { UserService } from '../service/user.service';
@@ -16,7 +16,9 @@ export class UserMiddleware implements NestMiddleware {
           const token = (authHeaders as string).split(' ')[1];
           const decoded: any = jwt.verify(token, process.env.JWT_SECRET);
           const user = await this.userService.findOne(decoded.userId);
-    
+          if(user.role != 'user'){
+            throw new ForbiddenException('Role Incorect')
+          }
           if (!user) {
             throw new HttpException('User not found.', HttpStatus.UNAUTHORIZED);
           }
