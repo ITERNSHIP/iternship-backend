@@ -21,9 +21,6 @@ export class CompanyEntity {
   @Column({ name: 'status', nullable: false,default:false })
   status: boolean;
 
-  @Column({ name: 'role', nullable: false })
-  role: string;
-  
   @Column({ nullable: true })
   imageName: string;
 

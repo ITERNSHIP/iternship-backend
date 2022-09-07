@@ -16,14 +16,11 @@ export class CompanyMiddleware implements NestMiddleware {
         const authHeaders = req.headers.authorization;
         if (authHeaders && (authHeaders as string).split(' ')[1]) {
           const token = (authHeaders as string).split(' ')[1];      
-          if( isJwtExpired(token)){
+          if(isJwtExpired(token)){
             throw new HttpException('Token is expired', HttpStatus.UNAUTHORIZED)
           }
           const decoded: any = jwt.verify(token, process.env.JWT_SECRET);
-          const user = await this.companyService.findOneCompanyStaff(decoded.companyId);
-          if(user.role != 'companyStaff'){
-            throw new ForbiddenException('Role Incorect')
-          }
+          const user = await this.companyService.findOneCompanyStaff(decoded.id);
           if (!user) {
             throw new HttpException('CompanyStaff not found.', HttpStatus.UNAUTHORIZED);
           }else{

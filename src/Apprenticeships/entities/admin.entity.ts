@@ -17,6 +17,4 @@ export class AdminEntity {
   @Column({ name: 'email', nullable: false })
   email: string;
 
-  @Column({ name: 'role', nullable: false })
-  role: string;
 }

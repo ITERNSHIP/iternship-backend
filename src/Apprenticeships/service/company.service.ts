@@ -142,6 +142,9 @@ const bcrypt = require('bcrypt');
     }
 
     async findOneCompanyStaff(companyId) {
+      if(!companyId){
+        throw new NotFoundException()
+      }
       const result = await this.companyRepository.findOneBy({
         companyId:companyId
       })

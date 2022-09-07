@@ -24,10 +24,6 @@ export class UserEntity {
 
   @Column({ name: 'status', nullable: true ,unique:false,default:false})
   status: boolean;
-
-  
-  @Column({ name: 'role', nullable: false })
-  role: string;
   
   @OneToMany(() => RegisterEntity,regis => regis.user,{createForeignKeyConstraints: true})
   @JoinColumn()

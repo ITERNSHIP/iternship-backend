@@ -61,7 +61,7 @@ return this.companyService.findOneCompanyStaff(id);
     return this.companyService.updateCompanyStaff(company);
   }
 
-  @Delete('/delete/:id')
+  @Delete('/deleteNews/:id')
   async delete(@Param('id') id): Promise<any> {
     return this.companyService.deleteNews(id);
   }

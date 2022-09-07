@@ -10,7 +10,6 @@ import { CompanyMiddleware } from '../middlewares/company.middleware';
 import { CompanyService } from '../service/company.service';
 
 
-
 @Module({
   controllers: [CompanyController],
   providers: [CompanyService,JwtService],
@@ -18,6 +17,7 @@ import { CompanyService } from '../service/company.service';
   ])],
   exports:[CompanyService]
 })
+
 export class CompanyModule implements NestModule {
   public configure(consumer: MiddlewareConsumer) {
     consumer
