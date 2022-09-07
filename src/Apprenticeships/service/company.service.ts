@@ -46,7 +46,6 @@ const bcrypt = require('bcrypt');
       return this.InternshipNewsRepository.find();
     }
     async findAllNewsbyCompany(companyName:any) {
-      console.log(companyName)
       let statement:string =`select * from internshipnews where "companyName" = '${companyName}'`
       const result = await  this.InternshipNewsRepository.query(statement)
       return result
@@ -215,7 +214,6 @@ const bcrypt = require('bcrypt');
       return result
     }
     async findRecruitByCompanyId(companyId) {
-      console.log(companyId)
       const result = await this.RecruitingRepository.createQueryBuilder("recruiting").select()
       .where("recruiting.companyCompanyId = :companyCompanyId", { companyCompanyId: companyId }).getMany()
       if (!result) {

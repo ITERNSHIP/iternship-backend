@@ -1,5 +1,5 @@
 import { Controller, Delete, Get, Post, Put, UseInterceptors , Res, UploadedFile, UploadedFiles } from '@nestjs/common';
-import { Body,Param,Response } from '@nestjs/common/decorators/http/route-params.decorator';
+import { Body,Param,Query,Response } from '@nestjs/common/decorators/http/route-params.decorator';
 import { FileInterceptor, FilesInterceptor } from '@nestjs/platform-express';
 import { CompanyEntity } from '../entities/company.entity';
 import { InternshipNewsEntity } from '../entities/internshipNews.entity';
@@ -23,13 +23,13 @@ export class CompanyController {
   async findAll(): Promise<InternshipNewsEntity[]> {
     return this.companyService.findAllNews();
   }
-  @Post('/findAllNewsbyCompany')
-  async findAllNewsbyCompany(@Body() request: any) {
-    return this.companyService.findAllNewsbyCompany(request.companyName);
+  @Get('/findAllNewsbyCompany')
+  async findAllNewsbyCompany(@Query('companyName') companyName: any) {
+    return this.companyService.findAllNewsbyCompany(companyName);
   }
-  @Post('/findCompanyDetailByName')
-  async findCompanyDetailByName(@Body() request: any) {
-    return this.companyService.findCompanyDetailByName(request.companyName);
+  @Get('/findCompanyDetailByName')
+  async findCompanyDetailByName(@Query('companyName') companyName: any) {
+    return this.companyService.findCompanyDetailByName(companyName);
   }
   @Post('/updateCompanyDetailById/:id')
   async updateCompanyDetailById(@Param('id') id,@Body() request: any) {
@@ -92,9 +92,9 @@ return this.companyService.findOneCompanyStaff(id);
   async findOneRecruit(@Param('id') id) {
   return this.companyService.findOneRecruit(id);
 }
-@Get('/findRecruitByCompanyName')
-async findRecruitByCompanyName(@Body() request: any) {
-  return this.companyService.findRecruitByCompanyId(request.companyId);
+@Get('/findRecruitById')
+async findRecruitByCompanyId(@Query('companyId') companyId: any) {
+  return this.companyService.findRecruitByCompanyId(companyId);
 }
 
 @Post('/uploadOne/:id')
@@ -114,7 +114,6 @@ compic:CompanyEntity): Promise<any> {
     filename: file.filename,
   }
   let image = response.filename
-  console.log(image)
 this.companyService.customQuery(image,id)
   return response;
 }
