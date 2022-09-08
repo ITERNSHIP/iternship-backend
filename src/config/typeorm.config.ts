@@ -19,6 +19,6 @@ export const typeOrmConfig: TypeOrmModuleOptions = {
   database: process.env.DB,
   entities: ['dist/Apprenticeships/entities/*.js'],
   synchronize: true,
-  logging:true
+  logging:false
 };
 
