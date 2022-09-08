@@ -3,7 +3,7 @@ import { Body,Param,Query,Response } from '@nestjs/common/decorators/http/route-
 import { FileInterceptor, FilesInterceptor } from '@nestjs/platform-express';
 import { CompanyEntity } from '../entities/company.entity';
 import { InternshipNewsEntity } from '../entities/internshipNews.entity';
-import { RecruitingEntity } from '../entities/recruiting.enity';
+import { RecruitingEntity } from '../entities/recruiting.entity';
 import { CompanyService } from '../service/company.service';
 import { diskStorage } from 'multer';
 import { editFileName, imageFileFilter } from 'src/utils/file-uploading.utils';

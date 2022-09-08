@@ -6,7 +6,7 @@ import { AdminEntity } from '../entities/admin.entity';
 import { CompanyEntity } from '../entities/company.entity';
 import { ConfirmationEntity } from '../entities/confirmation.entity';
 import { InternshipNewsEntity } from '../entities/internshipNews.entity';
-import { RecruitingEntity } from '../entities/recruiting.enity';
+import { RecruitingEntity } from '../entities/recruiting.entity';
 import { RegisterEntity } from '../entities/regis.entity';
 import { StaffEntity } from '../entities/staff.entity';
 import { UserEntity } from '../entities/user.entity';

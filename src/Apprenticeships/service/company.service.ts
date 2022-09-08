@@ -5,7 +5,7 @@ import {  Repository } from 'typeorm';
 import { CompanyEntity } from '../entities/company.entity';
 // import { CompanyViewRegis } from '../entities/companyViewRegis.entity';
 import { InternshipNewsEntity } from '../entities/internshipNews.entity';
-import { RecruitingEntity } from '../entities/recruiting.enity';
+import { RecruitingEntity } from '../entities/recruiting.entity';
 const bcrypt = require('bcrypt');
 
   

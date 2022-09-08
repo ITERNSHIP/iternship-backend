@@ -5,7 +5,7 @@ import { CompanyController } from '../controller/company.controller';
 import { CompanyEntity } from '../entities/company.entity';
 // import { CompanyViewRegis } from '../entities/companyViewRegis.entity';
 import { InternshipNewsEntity } from '../entities/internshipNews.entity';
-import { RecruitingEntity } from '../entities/recruiting.enity';
+import { RecruitingEntity } from '../entities/recruiting.entity';
 import { CompanyMiddleware } from '../middlewares/company.middleware';
 import { CompanyService } from '../service/company.service';
 
