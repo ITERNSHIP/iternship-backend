@@ -1,5 +1,6 @@
 import { Controller, Delete, Get, Post, Put } from '@nestjs/common';
-import { Body, Param,Response } from '@nestjs/common/decorators/http/route-params.decorator';
+import { Body, Param,Query,Response } from '@nestjs/common/decorators/http/route-params.decorator';
+import { CompanyEntity } from '../entities/company.entity';
 import { ConfirmationEntity } from '../entities/confirmation.entity';
 import { InternshipNewsEntity } from '../entities/internshipNews.entity';
 import { RecruitingEntity } from '../entities/recruiting.enity';
@@ -90,6 +91,19 @@ async findOneNews(@Param('id') id) {
 return this.userService.findOneNews(id);
 
 }
+
+@Get('/getAllCompany')
+async getAllCompany(): Promise<CompanyEntity[]> {
+  return this.userService.getAllCompany();
+}
+@Get('/findCompanyDetailById')
+  async findCompanyDetailByName(@Query('companyId') companyId: any) {
+    return this.userService.findCompanyDetailById(companyId);
+  }
+@Get('/findRecruitById')
+async findRecruitByCompanyId(@Query('companyId') companyId: any) {
+  return this.userService.findRecruitByCompanyId(companyId);
+  }
 @Post('/login')
 async login(@Body() req:any,   @Response({passthrough: true}) response: Response) {
 return this.userService.login(req,response);

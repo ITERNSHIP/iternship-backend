@@ -1,5 +1,5 @@
 import { Column, Entity, PrimaryGeneratedColumn,ManyToOne,JoinColumn,OneToOne } from "typeorm";
-import { CompanyViewRegis } from "./companyViewRegis.entity";
+// import { CompanyViewRegis } from "./companyViewRegis.entity";
 import { UserEntity } from "./user.entity";
 
 @Entity('regis')
@@ -47,8 +47,8 @@ export class RegisterEntity {
   @JoinColumn()
   public user: UserEntity;
 
-  @OneToOne(() => CompanyViewRegis,cvr => cvr.regis,{createForeignKeyConstraints: false})
-  @JoinColumn()
-  public cvr:CompanyViewRegis[];
+  // @OneToOne(() => CompanyViewRegis,cvr => cvr.regis,{createForeignKeyConstraints: false})
+  // @JoinColumn()
+  // public cvr:CompanyViewRegis[];
 
 }

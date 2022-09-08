@@ -16,7 +16,7 @@ export class AdminMiddleware implements NestMiddleware {
         if (authHeaders && (authHeaders as string).split(' ')[1]) {
           const token = (authHeaders as string).split(' ')[1];
           const decoded: any = jwt.verify(token, process.env.JWT_SECRET);
-          const user = await this.adminService.findOne(decoded.adminId);
+          const user = await this.adminService.findOne(decoded.id);
           if (!user) {
             throw new HttpException('User not found.', HttpStatus.UNAUTHORIZED);
           }

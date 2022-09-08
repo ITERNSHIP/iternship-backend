@@ -16,7 +16,7 @@ export class StaffMiddleware implements NestMiddleware {
         if (authHeaders && (authHeaders as string).split(' ')[1]) {
           const token = (authHeaders as string).split(' ')[1];
           const decoded: any = jwt.verify(token, process.env.JWT_SECRET);
-          const user = await this.staffService.findOne(decoded.staffId);
+          const user = await this.staffService.findOne(decoded.id);
           if (!user) {
             throw new HttpException('User not found.', HttpStatus.UNAUTHORIZED);
           }

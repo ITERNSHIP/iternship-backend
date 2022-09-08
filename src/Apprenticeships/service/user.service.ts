@@ -8,6 +8,7 @@ import {
 import { JwtService } from '@nestjs/jwt';
 import { InjectRepository } from '@nestjs/typeorm';
 import {  Repository } from 'typeorm';
+import { CompanyEntity } from '../entities/company.entity';
 import { ConfirmationEntity } from '../entities/confirmation.entity';
 import { InternshipNewsEntity } from '../entities/internshipNews.entity';
 import { RecruitingEntity } from '../entities/recruiting.enity';
@@ -25,10 +26,16 @@ export class UserService {
 
     @InjectRepository(ConfirmationEntity)
     private confirmationRepository: Repository<ConfirmationEntity>,
+
     @InjectRepository(RecruitingEntity)
     private RecruitingRepository: Repository<RecruitingEntity>,
+
     @InjectRepository(InternshipNewsEntity)
     private InternshipNewsRepository: Repository<InternshipNewsEntity>,
+
+    @InjectRepository(CompanyEntity)
+    private companyRepository: Repository<CompanyEntity>,
+
     private jwtService: JwtService
   ) {}
 
@@ -196,6 +203,32 @@ const result = await this.userRepository.findOneBy({
     return result
   }
   
+  async getAllCompany() {
+    const result = await this.companyRepository.createQueryBuilder("companys").
+    select(["companys.companyId","companys.companyName","companys.companyDetail","companys.imageName"])
+    .getMany()
+    if (!result) {
+      throw new NotFoundException();
+    }
+    return result
+  }
+  async findCompanyDetailById(companyId) {
+    console.log(companyId)
+    const result = await this.companyRepository.createQueryBuilder("companys").select(["companys.companyName","companys.companyDetail"])
+    .where("companys.companyId = :companyId", { companyId: companyId }).getMany()
+    if (!result) {
+      throw new NotFoundException();
+    }
+    return result
+  }
+  async findRecruitByCompanyId(companyId) {
+    const result = await this.RecruitingRepository.createQueryBuilder("recruiting").select()
+    .where("recruiting.companyCompanyId = :companyCompanyId", { companyCompanyId: companyId }).getMany()
+    if (!result) {
+      throw new NotFoundException();
+    }
+    return result
+  }
   async login(req:any,response:any){
     const user = await this.userRepository.findOneBy({
       email:req.email

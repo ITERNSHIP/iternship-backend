@@ -3,7 +3,7 @@ import { JwtService } from '@nestjs/jwt';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { CompanyController } from '../controller/company.controller';
 import { CompanyEntity } from '../entities/company.entity';
-import { CompanyViewRegis } from '../entities/companyViewRegis.entity';
+// import { CompanyViewRegis } from '../entities/companyViewRegis.entity';
 import { InternshipNewsEntity } from '../entities/internshipNews.entity';
 import { RecruitingEntity } from '../entities/recruiting.enity';
 import { CompanyMiddleware } from '../middlewares/company.middleware';
@@ -13,7 +13,8 @@ import { CompanyService } from '../service/company.service';
 @Module({
   controllers: [CompanyController],
   providers: [CompanyService,JwtService],
-  imports:[TypeOrmModule.forFeature([CompanyEntity,CompanyViewRegis,InternshipNewsEntity,RecruitingEntity,
+  imports:[TypeOrmModule.forFeature([CompanyEntity,InternshipNewsEntity,RecruitingEntity,
+    // CompanyViewRegis
   ])],
   exports:[CompanyService]
 })

@@ -3,7 +3,7 @@ import { JwtService } from '@nestjs/jwt';
 import { InjectRepository } from '@nestjs/typeorm';
 import {  Repository } from 'typeorm';
 import { CompanyEntity } from '../entities/company.entity';
-import { CompanyViewRegis } from '../entities/companyViewRegis.entity';
+// import { CompanyViewRegis } from '../entities/companyViewRegis.entity';
 import { InternshipNewsEntity } from '../entities/internshipNews.entity';
 import { RecruitingEntity } from '../entities/recruiting.enity';
 const bcrypt = require('bcrypt');
@@ -14,8 +14,8 @@ const bcrypt = require('bcrypt');
       @InjectRepository(CompanyEntity)
       private companyRepository: Repository<CompanyEntity>,
   
-      @InjectRepository(CompanyViewRegis)
-      private cvrRepository: Repository<CompanyViewRegis>,
+      // @InjectRepository(CompanyViewRegis)
+      // private cvrRepository: Repository<CompanyViewRegis>,
 
       @InjectRepository(InternshipNewsEntity)
       private InternshipNewsRepository: Repository<InternshipNewsEntity>,
@@ -142,9 +142,6 @@ const bcrypt = require('bcrypt');
     }
 
     async findOneCompanyStaff(companyId) {
-      if(!companyId){
-        throw new NotFoundException()
-      }
       const result = await this.companyRepository.findOneBy({
         companyId:companyId
       })
