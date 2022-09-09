@@ -20,5 +20,4 @@ export class StaffEntity {
   @Column({ name: 'status', nullable: false,default:false })
   status: boolean;
 
-
 }

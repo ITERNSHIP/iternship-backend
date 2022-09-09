@@ -34,7 +34,7 @@ const bcrypt = require('bcrypt');
             await this.adminRepository.save(admin);
             return {
               status: "success",
-              message: "Crate Admin Success",
+              message: "Create Admin Success",
             };
           }
         
@@ -70,7 +70,9 @@ else{
       async login(req:any,response:any){
 
 
-        const admin = await this.adminRepository.findOneBy(req.emai)
+        const admin = await this.adminRepository.findOneBy({
+          email:req.email
+        })
         if (!admin) {
           throw new BadRequestException('invalid credentials');
       }
@@ -81,7 +83,7 @@ else{
     
         const jwt = await this.jwtService.signAsync({id: admin.adminId},{secret:process.env.JWT_SECRET,expiresIn:'1d'});
     
-      response.cookie('jwt', jwt, {httpOnly: true});
+      response.cookie('jwt', jwt);
     
       return {
           message: 'success'

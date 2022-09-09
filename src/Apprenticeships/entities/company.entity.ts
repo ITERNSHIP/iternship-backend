@@ -1,4 +1,5 @@
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, PrimaryGeneratedColumn,OneToMany,JoinColumn  } from "typeorm";
+import { RecruitingEntity } from "./recruiting.entity";
 
 @Entity('companys')
 export class CompanyEntity {
@@ -8,7 +9,7 @@ export class CompanyEntity {
   @Column({ name: 'companyName', nullable: false  })
   companyName: string;
 
-  @Column({ name: 'companyDetail', nullable: false })
+  @Column({ name: 'companyDetail', nullable: true })
   companyDetail: string;
 
   @Column({ name: 'email', nullable: false ,unique:true})
@@ -20,5 +21,11 @@ export class CompanyEntity {
   @Column({ name: 'status', nullable: false,default:false })
   status: boolean;
 
+  @Column({ nullable: true })
+  imageName: string;
+
+  @OneToMany(() => RecruitingEntity,recruit => recruit.company,{createForeignKeyConstraints: true})
+  @JoinColumn()
+  public recruit:RecruitingEntity[];
 
 }

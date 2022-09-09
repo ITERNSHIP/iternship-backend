@@ -8,7 +8,10 @@ import {
 import { JwtService } from '@nestjs/jwt';
 import { InjectRepository } from '@nestjs/typeorm';
 import {  Repository } from 'typeorm';
+import { CompanyEntity } from '../entities/company.entity';
 import { ConfirmationEntity } from '../entities/confirmation.entity';
+import { InternshipNewsEntity } from '../entities/internshipNews.entity';
+import { RecruitingEntity } from '../entities/recruiting.entity';
 import { RegisterEntity } from '../entities/regis.entity';
 import { UserEntity } from '../entities/user.entity';
 const bcrypt = require('bcrypt');
@@ -23,6 +26,16 @@ export class UserService {
 
     @InjectRepository(ConfirmationEntity)
     private confirmationRepository: Repository<ConfirmationEntity>,
+
+    @InjectRepository(RecruitingEntity)
+    private RecruitingRepository: Repository<RecruitingEntity>,
+
+    @InjectRepository(InternshipNewsEntity)
+    private InternshipNewsRepository: Repository<InternshipNewsEntity>,
+
+    @InjectRepository(CompanyEntity)
+    private companyRepository: Repository<CompanyEntity>,
+
     private jwtService: JwtService
   ) {}
 
@@ -37,7 +50,7 @@ export class UserService {
       await this.userRepository.save(user);
       return {
         status: "success",
-        message: "Crate User Success",
+        message: "Create User Success",
       };
     } catch (err) {
       return err;
@@ -86,7 +99,7 @@ const result = await this.userRepository.findOneBy({
       await this.userRepository.delete(id);
       return {
         status: "success",
-        message: "Deltete User  Success",
+        message: "Delete User  Success",
       };
     } catch (err) {
       return err;
@@ -100,7 +113,7 @@ const result = await this.userRepository.findOneBy({
       await this.regisRepository.save(regis);
       return {
         status: "success",
-        message: "Crate RegisterForm Success",
+        message: "Create RegisterForm Success",
       };
     } catch (err) {
       return err;
@@ -117,7 +130,7 @@ const result = await this.userRepository.findOneBy({
       await this.regisRepository.delete(id);
        return {
         status: "success",
-        message: "Deltete RegisterForm  Success",
+        message: "Delete RegisterForm  Success",
       };
       }
     
@@ -144,7 +157,7 @@ const result = await this.userRepository.findOneBy({
     await this.confirmationRepository.save(confirmation)
       return {
         status: "success",
-        message: "Crate ConfirmationForm Success",
+        message: "Create ConfirmationForm Success",
       };
     } catch (err) {
       return err;
@@ -163,10 +176,63 @@ const result = await this.userRepository.findOneBy({
     // return this.regisRepository.createQueryBuilder("regis").leftJoinAndSelect('regis.user', 'user').where("regis.regisId = :id ",{id:regisId}).getMany()
     return await this.confirmationRepository.find(confirmationId);
   }
+  async findAllRecruit(): Promise<RecruitingEntity[]> {
+    return this.RecruitingRepository.find();
+  }
+
+  async findOneRecruit(recruitId) {
+    const result = await this.RecruitingRepository.findOneBy({
+      recruitId:recruitId
+    })
+    if (!result) {
+      throw new NotFoundException();
+    }
+    return result
+  }
+  async findAllNews(): Promise<InternshipNewsEntity[]> {
+    return this.InternshipNewsRepository.find();
+  }
+
+  async findOneNews(newsId) {
+    const result = await this.InternshipNewsRepository.findOneBy({
+      newsId:newsId
+    })
+    if (!result) {
+      throw new NotFoundException();
+    }
+    return result
+  }
+  
+  async getAllCompany() {
+    const result = await this.companyRepository.createQueryBuilder("companys").
+    select(["companys.companyId","companys.companyName","companys.companyDetail","companys.imageName"])
+    .getMany()
+    if (!result) {
+      throw new NotFoundException();
+    }
+    return result
+  }
+  async findCompanyDetailById(companyId) {
+    console.log(companyId)
+    const result = await this.companyRepository.createQueryBuilder("companys").select(["companys.companyName","companys.companyDetail"])
+    .where("companys.companyId = :companyId", { companyId: companyId }).getMany()
+    if (!result) {
+      throw new NotFoundException();
+    }
+    return result
+  }
+  async findRecruitByCompanyId(companyId) {
+    const result = await this.RecruitingRepository.createQueryBuilder("recruiting").select()
+    .where("recruiting.companyCompanyId = :companyCompanyId", { companyCompanyId: companyId }).getMany()
+    if (!result) {
+      throw new NotFoundException();
+    }
+    return result
+  }
   async login(req:any,response:any){
-
-
-    const user = await this.userRepository.findOneBy(req.emai)
+    const user = await this.userRepository.findOneBy({
+      email:req.email
+    })
     if (!user) {
       throw new BadRequestException('invalid credentials');
   }
@@ -177,7 +243,7 @@ const result = await this.userRepository.findOneBy({
 
     const jwt = await this.jwtService.signAsync({id: user.userId},{secret:process.env.JWT_SECRET,expiresIn:'1d'});
 
-  response.cookie('jwt', jwt, {httpOnly: true});
+  response.cookie('jwt', jwt);
 
   return {
       message: 'success'
@@ -190,4 +256,5 @@ const result = await this.userRepository.findOneBy({
         message: 'success'
     }
 }
+
 }

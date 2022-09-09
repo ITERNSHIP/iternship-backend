@@ -1,19 +1,30 @@
 import { MiddlewareConsumer, Module, NestModule, RequestMethod } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { StaffEntity } from '../entities/staff.entity';
-import { AdminMiddleware } from '../middlewares/admin.middleware';
 import { JwtService } from '@nestjs/jwt';
 import { StaffController } from '../controller/staff.controller';
 import { StaffService } from '../service/staff.service';
+import { RegisterEntity } from '../entities/regis.entity';
+import { StaffMiddleware } from '../middlewares/staff.middleware';
 
 
 
 @Module({
   controllers: [StaffController],
   providers: [StaffService,JwtService],
-  imports:[TypeOrmModule.forFeature([StaffEntity])],
+  imports:[TypeOrmModule.forFeature([StaffEntity,RegisterEntity])],
   exports:[StaffService]
 })
-export class StaffModule   {
+export class StaffModule   
+implements NestModule {
+  public configure(consumer: MiddlewareConsumer) {
+    consumer
+      .apply(StaffMiddleware)
+      .exclude({ path: 'staff/login', method: RequestMethod.POST },
+      { path: 'staff/logout', method: RequestMethod.POST },
+      { path: 'staff/add', method: RequestMethod.POST }
+      )
+      .forRoutes(StaffController);
+  }
 
 }

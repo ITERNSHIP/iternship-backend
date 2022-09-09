@@ -1,6 +1,9 @@
 import { Controller, Delete, Get, Post, Put } from '@nestjs/common';
-import { Body, Param,Response } from '@nestjs/common/decorators/http/route-params.decorator';
+import { Body, Param,Query,Response } from '@nestjs/common/decorators/http/route-params.decorator';
+import { CompanyEntity } from '../entities/company.entity';
 import { ConfirmationEntity } from '../entities/confirmation.entity';
+import { InternshipNewsEntity } from '../entities/internshipNews.entity';
+import { RecruitingEntity } from '../entities/recruiting.entity';
 import { RegisterEntity } from '../entities/regis.entity';
 import { UserEntity } from '../entities/user.entity';
 import { UserService } from '../service/user.service';
@@ -68,12 +71,46 @@ export class UserController {
   async findOneconfirmationForm(@Param('id') id) {
   return this.userService.findOneconfirmationForm(id);
 }
-  @Post('/login')
-  async login(@Body() req:any,   @Response({passthrough: true}) response: Response) {
-  return this.userService.login(req,response);
-  }  
-  @Post('/logout')
-  async logout(@Response({passthrough: true}) response: Response) {
-  return this.userService.logout(response);
+@Get('/getAllRecruit')
+async findAllRecruit(): Promise<RecruitingEntity[]> {
+  return this.userService.findAllRecruit();
+}
+
+@Get('/getRecruitById/:id')
+async findOneRecruit(@Param('id') id) {
+return this.userService.findOneRecruit(id);
+}
+
+@Get('/getAllNews')
+async findAllNews(): Promise<InternshipNewsEntity[]> {
+  return this.userService.findAllNews();
+}
+
+@Get('/getNewsById/:id')
+async findOneNews(@Param('id') id) {
+return this.userService.findOneNews(id);
+
+}
+
+@Get('/getAllCompany')
+async getAllCompany(): Promise<CompanyEntity[]> {
+  return this.userService.getAllCompany();
+}
+@Get('/findCompanyDetailById')
+  async findCompanyDetailByName(@Query('companyId') companyId: any) {
+    return this.userService.findCompanyDetailById(companyId);
   }
+@Get('/findRecruitById')
+async findRecruitByCompanyId(@Query('companyId') companyId: any) {
+  return this.userService.findRecruitByCompanyId(companyId);
+  }
+@Post('/login')
+async login(@Body() req:any,   @Response({passthrough: true}) response: Response) {
+return this.userService.login(req,response);
+}  
+@Post('/logout')
+async logout(@Response({passthrough: true}) response: Response) {
+return this.userService.logout(response);
+}
+
 }

@@ -1,9 +1,9 @@
-import { HttpException, HttpStatus, Injectable, NestMiddleware } from '@nestjs/common';
+import { ForbiddenException, HttpException, HttpStatus, Injectable, NestMiddleware } from '@nestjs/common';
 import { Request, Response, NextFunction } from 'express';
 import * as jwt from 'jsonwebtoken';
 import { AdminService } from '../service/admin.service';
 import { UserService } from '../service/user.service';
-
+import { isJwtExpired } from 'jwt-check-expiration';
 
 @Injectable()
 export class AdminMiddleware implements NestMiddleware {
@@ -15,9 +15,11 @@ export class AdminMiddleware implements NestMiddleware {
         const authHeaders = req.headers.authorization;
         if (authHeaders && (authHeaders as string).split(' ')[1]) {
           const token = (authHeaders as string).split(' ')[1];
+          if(isJwtExpired(token)){
+            throw new HttpException('Token is expired', HttpStatus.UNAUTHORIZED)
+          }
           const decoded: any = jwt.verify(token, process.env.JWT_SECRET);
-          const user = await this.adminService.findOne(decoded.adminId);
-    
+          const user = await this.adminService.findOne(decoded.id);
           if (!user) {
             throw new HttpException('User not found.', HttpStatus.UNAUTHORIZED);
           }

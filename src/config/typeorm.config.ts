@@ -1,7 +1,7 @@
 import { TypeOrmModuleOptions } from '@nestjs/typeorm';
 require('dotenv').config()
 export const typeOrmConfig: TypeOrmModuleOptions = {
-  // type: 'postgres',
+// type: 'postgres',
   // host: 'localhost',
   // port: 5444,
   // username:'postgres',

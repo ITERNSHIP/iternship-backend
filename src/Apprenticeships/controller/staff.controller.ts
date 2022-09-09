@@ -1,4 +1,5 @@
 import { Body, Controller, Delete, Get, Param, Post, Put,Response } from '@nestjs/common';
+import { RegisterEntity } from '../entities/regis.entity';
 import { StaffEntity } from '../entities/staff.entity';
 import { StaffService } from '../service/staff.service';
 
@@ -22,13 +23,22 @@ export class StaffController {
     async findOne(@Param('id') id) {
     return await this.staffService.findOne(id);
   }
-//   @Post('/login')
-//   async login(@Body() req:any,   @Response({passthrough: true}) response: Response) {
-//   return this.adminService.login(req,response);
-//   }  
-//   @Post('/logout')
-//   async logout(@Response({passthrough: true}) response: Response) {
-//   return this.adminService.logout(response);
-//   }
+  @Get('/getAllRegister')
+  async findAllRegis(): Promise<RegisterEntity[]> {
+    return this.staffService.findAllRegis();
+  }
+
+  @Get('/getRegis/:id')
+  async findOneRegis(@Param('id') id) {
+  return this.staffService.findOneRegis(id);
+}
+  @Post('/login')
+  async login(@Body() req:any,   @Response({passthrough: true}) response: Response) {
+  return this.staffService.login(req,response);
+  }  
+  @Post('/logout')
+  async logout(@Response({passthrough: true}) response: Response) {
+  return this.staffService.logout(response);
+  }
  
 }

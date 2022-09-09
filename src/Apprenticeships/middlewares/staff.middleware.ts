@@ -1,13 +1,14 @@
 import { ForbiddenException, HttpException, HttpStatus, Injectable, NestMiddleware } from '@nestjs/common';
 import { Request, Response, NextFunction } from 'express';
 import * as jwt from 'jsonwebtoken';
-import { UserService } from '../service/user.service';
+import { StaffService } from '../service/staff.service';
 import { isJwtExpired } from 'jwt-check-expiration';
 
+
 @Injectable()
-export class UserMiddleware implements NestMiddleware {
+export class StaffMiddleware implements NestMiddleware {
     constructor(
-        private  userService: UserService,
+        private  staffService: StaffService,
         ) {}
         
     async use(req: Request, res: Response, next: NextFunction) {
@@ -18,10 +19,11 @@ export class UserMiddleware implements NestMiddleware {
             throw new HttpException('Token is expired', HttpStatus.UNAUTHORIZED)
           }
           const decoded: any = jwt.verify(token, process.env.JWT_SECRET);
-          const user = await this.userService.findOne(decoded.id);
+          const user = await this.staffService.findOne(decoded.id);
           if (!user) {
             throw new HttpException('User not found.', HttpStatus.UNAUTHORIZED);
           }
+
     
           req.user = user;
           next();
