@@ -83,10 +83,11 @@ else{
     
         const jwt = await this.jwtService.signAsync({id: admin.adminId},{secret:process.env.JWT_SECRET,expiresIn:'1d'});
     
-      response.cookie('jwt', jwt);
+      // response.cookie('jwt', jwt);
     
       return {
-          message: 'success'
+          message: 'success',
+          accessToken:jwt
       };
       }
       async logout(response:any) {

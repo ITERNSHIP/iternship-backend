@@ -235,10 +235,11 @@ const bcrypt = require('bcrypt');
   
       const jwt = await this.jwtService.signAsync({id: user.companyId},{secret:process.env.JWT_SECRET,expiresIn:'1d'});
   
-    response.cookie('jwt', jwt);
+    // response.cookie('jwt', jwt);
   
     return {
         message: 'success',
+        accessToken:jwt,
         companyId:user.companyId,
         companyName:user.companyName
     };
