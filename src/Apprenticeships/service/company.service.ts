@@ -234,7 +234,7 @@ const bcrypt = require('bcrypt');
       }
       return result
     }
-    async updateRecruiteStatus(id:any,request: any) {
+    async updateRegisStatus(id:any,request: any) {
       if (
         this.RegisterRepository.findByIds(id) == null ||
         (await this.RegisterRepository.findByIds(id)).length <= 0
