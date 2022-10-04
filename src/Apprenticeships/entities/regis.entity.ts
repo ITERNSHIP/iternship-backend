@@ -13,6 +13,9 @@ export class RegisterEntity {
   @Column({ name: 'lastName', nullable: false })
   lName: string;
 
+  @Column({ name: 'gerder', nullable: false })
+  gender: string;
+
   @Column({ name: 'year', nullable: false })
   year: string;
 
@@ -40,8 +43,14 @@ export class RegisterEntity {
   @Column({ name: 'resume', nullable: false })
   resume: string;
 
-  @Column({ name: 'status', nullable: false,default:false })
-  status: boolean;
+  @Column({ type: 'date' })
+  startDate: string;
+
+  @Column({ type: 'date' })
+  endDate: string;
+
+  @Column({ name: 'status', nullable: true})
+  status: string;
   
   @ManyToOne(()=> UserEntity, user => user.regis,{onDelete:'CASCADE',eager:true,createForeignKeyConstraints: true})
   @JoinColumn()

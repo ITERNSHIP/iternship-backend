@@ -6,6 +6,7 @@ import { CompanyEntity } from '../entities/company.entity';
 // import { CompanyViewRegis } from '../entities/companyViewRegis.entity';
 import { InternshipNewsEntity } from '../entities/internshipNews.entity';
 import { RecruitingEntity } from '../entities/recruiting.entity';
+import { RegisterEntity } from '../entities/regis.entity';
 import { CompanyMiddleware } from '../middlewares/company.middleware';
 import { CompanyService } from '../service/company.service';
 
@@ -13,7 +14,7 @@ import { CompanyService } from '../service/company.service';
 @Module({
   controllers: [CompanyController],
   providers: [CompanyService,JwtService],
-  imports:[TypeOrmModule.forFeature([CompanyEntity,InternshipNewsEntity,RecruitingEntity,
+  imports:[TypeOrmModule.forFeature([CompanyEntity,InternshipNewsEntity,RecruitingEntity,RegisterEntity
     // CompanyViewRegis
   ])],
   exports:[CompanyService]

@@ -97,6 +97,12 @@ async findRecruitByCompanyId(@Query('companyId') companyId: any) {
   return this.companyService.findRecruitByCompanyId(companyId);
 }
 
+@Get('/findregisByCompanyName')
+async findregisByCompanyId(@Query('companyName') companyName: any) {
+  console.log(companyName)
+  return this.companyService.findregisByCompanyName(companyName);
+}
+
 @Post('/uploadOne/:id')
 @UseInterceptors(
   FileInterceptor('image', {

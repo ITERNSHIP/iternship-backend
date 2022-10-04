@@ -1,23 +1,20 @@
-import { Column, Entity, PrimaryGeneratedColumn,OneToMany,OneToOne,JoinColumn } from "typeorm";
+import { Column, Entity, PrimaryGeneratedColumn,OneToMany,OneToOne,JoinColumn,PrimaryColumn } from "typeorm";
 import { ConfirmationEntity } from "./confirmation.entity";
 import { RegisterEntity } from "./regis.entity";
 
 @Entity('users')
 export class UserEntity {
-  @PrimaryGeneratedColumn('uuid')
+  @PrimaryColumn()
   userId: string;
 
-  @Column({ name: 'userName', nullable: false,unique:true })
-  userName: string;
+  // @Column({ name: 'userName', nullable: false,unique:true })
+  // userName: string;
 
-  @Column({ name: 'password', nullable: false,unique:false })
-  password: string;
+  // @Column({ name: 'password', nullable: false,unique:false })
+  // password: string;
   
-  @Column({ name: 'firstName', nullable: false,unique:false })
-  fName: string;
-
-  @Column({ name: 'lastName', nullable: false,unique:false })
-  lName: string;
+  @Column({ name: 'fullname', nullable: false,unique:false })
+  fullName: string;
 
   @Column({ name: 'email', nullable: false,unique:true })
   email: string;
@@ -29,7 +26,7 @@ export class UserEntity {
   @JoinColumn()
   public regis:RegisterEntity[];
 
-  @OneToOne(() => ConfirmationEntity,confirmation => confirmation.user,{createForeignKeyConstraints: false})
+  @OneToOne(() => ConfirmationEntity,confirmation => confirmation.user,{createForeignKeyConstraints: false,onDelete:"DEFAULT"})
   @JoinColumn()
   public confirmation:ConfirmationEntity[];
 }

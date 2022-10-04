@@ -6,6 +6,7 @@ import { CompanyEntity } from '../entities/company.entity';
 // import { CompanyViewRegis } from '../entities/companyViewRegis.entity';
 import { InternshipNewsEntity } from '../entities/internshipNews.entity';
 import { RecruitingEntity } from '../entities/recruiting.entity';
+import { RegisterEntity } from '../entities/regis.entity';
 const bcrypt = require('bcrypt');
 
   
@@ -22,6 +23,10 @@ const bcrypt = require('bcrypt');
 
       @InjectRepository(RecruitingEntity)
       private RecruitingRepository: Repository<RecruitingEntity>,
+
+      @InjectRepository(RegisterEntity)
+      private RegisterRepository: Repository<RegisterEntity>,
+
       private jwtService: JwtService
   
     ) {}
@@ -221,6 +226,29 @@ const bcrypt = require('bcrypt');
       }
       return result
     }
+    async findregisByCompanyName(companyName) {
+      const result = await this.RegisterRepository.createQueryBuilder("regis").select()
+      .where("regis.companyName = :companyName", { companyName: companyName }).getMany()
+      if (!result) {
+        throw new NotFoundException();
+      }
+      return result
+    }
+    async updateRecruiteStatus(id:any,request: any) {
+      if (
+        this.RegisterRepository.findByIds(id) == null ||
+        (await this.RegisterRepository.findByIds(id)).length <= 0
+      ) {
+        throw new NotFoundException();
+      }
+      await this.RegisterRepository.createQueryBuilder().update(RegisterEntity).set({status: request.status})
+      .where("regisId = :id", {id : id}).execute()
+      return {
+        status: "success",
+        message: "Update Success"
+      };
+  }
+
     async login(req:any,response:any){
       const user = await this.companyRepository.findOneBy({
         email:req.email

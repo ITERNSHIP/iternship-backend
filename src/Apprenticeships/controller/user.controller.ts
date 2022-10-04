@@ -13,10 +13,10 @@ import { UserService } from '../service/user.service';
 export class UserController {
   constructor(private userService: UserService){}
 
-  @Post('/add')
-  create(@Body() user: UserEntity): Promise<UserEntity> {
-    return this.userService.create(user);
-  }
+  // @Post('/add')
+  // create(@Body() user: UserEntity): Promise<UserEntity> {
+  //   return this.userService.create(user);
+  // }
 
   @Get('/get')
   async findAll(): Promise<UserEntity[]> {
@@ -29,10 +29,10 @@ export class UserController {
 
 }
 
-  @Put('/update/:id')
-  async update(@Param('id') id:string, @Body() user: UserEntity): Promise<any>{
-    return this.userService.update(user);
-  }
+  // @Put('/update/:id')
+  // async update(@Param('id') id:string, @Body() user: UserEntity): Promise<any>{
+  //   return this.userService.update(user);
+  // }
 
   @Delete('/delete/:id')
   async delete(@Param('id') id): Promise<any> {
@@ -104,13 +104,17 @@ async getAllCompany(): Promise<CompanyEntity[]> {
 async findRecruitByCompanyId(@Query('companyId') companyId: any) {
   return this.userService.findRecruitByCompanyId(companyId);
   }
-@Post('/login')
-async login(@Body() req:any,   @Response({passthrough: true}) response: Response) {
-return this.userService.login(req,response);
-}  
+// @Post('/login')
+// async login(@Body() req:any,   @Response({passthrough: true}) response: Response) {
+// return this.userService.login(req,response);
+// }  
 @Post('/logout')
 async logout(@Response({passthrough: true}) response: Response) {
 return this.userService.logout(response);
 }
 
+@Get('/authcode')
+async authcode(@Query('code') code: any) {
+  return this.userService.authCode(code);
+  }
 }
