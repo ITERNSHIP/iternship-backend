@@ -231,6 +231,33 @@ const result = await this.userRepository.findOneBy({
     }
     return result
   }
+  async findregisBystatusPending() {
+    const status = "pending"
+    const result = await this.regisRepository.createQueryBuilder("regis").select()
+    .where("regis.status = :status", { status: status }).getMany()
+    if (!result) {
+      throw new NotFoundException();
+    }
+    return result
+  }
+  async findregisBystatusPass() {
+    const status = "pass"
+    const result = await this.regisRepository.createQueryBuilder("regis").select()
+    .where("regis.status = :status", { status: status }).getMany()
+    if (!result) {
+      throw new NotFoundException();
+    }
+    return result
+  }
+  async findregisBystatusNotpass() {
+    const status = "notpass"
+    const result = await this.regisRepository.createQueryBuilder("regis").select()
+    .where("regis.status = :status", { status: status }).getMany()
+    if (!result) {
+      throw new NotFoundException();
+    }
+    return result
+  }
   async authCode(code){
     const clientSecret = process.env.CLIENT_SECRET
     const clientId = process.env.CLIENT_ID

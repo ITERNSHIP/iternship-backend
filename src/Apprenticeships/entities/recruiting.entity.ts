@@ -21,8 +21,14 @@ export class RecruitingEntity {
   @Column({ name: 'contact', nullable: false,})
   contact: string;
 
-  @Column({ name: 'longTerm', nullable: false })
-  longTerm: string;
+  @Column({ type: 'date' })
+  startDate: string;
+
+  @Column({ type: 'date' })
+  endDate: string;
+
+  @Column({ name: 'openingDate', nullable: false })
+  openingDate: string;
 
   @ManyToOne(()=> CompanyEntity, company => company.recruit,{onDelete:'CASCADE',eager:true,createForeignKeyConstraints: true})
   @JoinColumn()

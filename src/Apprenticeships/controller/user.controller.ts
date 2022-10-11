@@ -104,6 +104,18 @@ async getAllCompany(): Promise<CompanyEntity[]> {
 async findRecruitByCompanyId(@Query('companyId') companyId: any) {
   return this.userService.findRecruitByCompanyId(companyId);
   }
+  @Get('/findregisBystatusPending')
+async findregisBystatusPending() {
+  return this.userService.findregisBystatusPending();
+}
+@Get('/findregisBystatusPass')
+async findregisBystatusPass() {
+  return this.userService.findregisBystatusPass();
+}
+@Get('/findregisBystatusNotpass')
+async findregisBystatusNotpass() {
+  return this.userService.findregisBystatusNotpass();
+}
 // @Post('/login')
 // async login(@Body() req:any,   @Response({passthrough: true}) response: Response) {
 // return this.userService.login(req,response);
