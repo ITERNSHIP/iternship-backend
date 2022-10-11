@@ -12,6 +12,12 @@ export class CompanyEntity {
   @Column({ name: 'companyDetail', nullable: true })
   companyDetail: string;
 
+  @Column({ name: 'contactName', nullable: true })
+  contactName: string;
+
+  @Column({ name: 'phoneNumber', nullable: true })
+  phoneNumber: string;
+
   @Column({ name: 'email', nullable: false ,unique:true})
   email: string;
 
