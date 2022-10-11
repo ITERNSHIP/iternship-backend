@@ -16,14 +16,14 @@ export class RegisterEntity {
   @Column({ name: 'gerder', nullable: false })
   gender: string;
 
-  @Column({ name: 'year', nullable: false })
-  year: string;
+  // @Column({ name: 'year', nullable: false })
+  // year: string;
 
   @Column({ name: 'phoneNumber', nullable: false })
   phoneNumber: string;
 
-  @Column({ name: 'semester', nullable: false })
-  semester: string;
+  // @Column({ name: 'semester', nullable: false })
+  // semester: string;
 
   @Column('decimal',{ name: 'grade', nullable: false,  precision: 10, scale: 7})
   grade: number;

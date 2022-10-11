@@ -249,6 +249,33 @@ const bcrypt = require('bcrypt');
       };
   }
 
+  async findregisBystatusPending() {
+    const status = "pending"
+    const result = await this.RegisterRepository.createQueryBuilder("regis").select()
+    .where("regis.status = :status", { status: status }).getMany()
+    if (!result) {
+      throw new NotFoundException();
+    }
+    return result
+  }
+  async findregisBystatusPass() {
+    const status = "pass"
+    const result = await this.RegisterRepository.createQueryBuilder("regis").select()
+    .where("regis.status = :status", { status: status }).getMany()
+    if (!result) {
+      throw new NotFoundException();
+    }
+    return result
+  }
+  async findregisBystatusNotpass() {
+    const status = "notpass"
+    const result = await this.RegisterRepository.createQueryBuilder("regis").select()
+    .where("regis.status = :status", { status: status }).getMany()
+    if (!result) {
+      throw new NotFoundException();
+    }
+    return result
+  }
     async login(req:any,response:any){
       const user = await this.companyRepository.findOneBy({
         email:req.email

@@ -99,10 +99,26 @@ async findRecruitByCompanyId(@Query('companyId') companyId: any) {
 
 @Get('/findregisByCompanyName')
 async findregisByCompanyId(@Query('companyName') companyName: any) {
-  console.log(companyName)
   return this.companyService.findregisByCompanyName(companyName);
 }
 
+@Post('/updateRegisStatus/:id')
+async updateRegisStatus(@Param('id') id,@Body() request: any) {
+  return this.companyService.updateRegisStatus(id,request);
+}
+
+@Get('/findregisBystatusPending')
+async findregisBystatusPending() {
+  return this.companyService.findregisBystatusPending();
+}
+@Get('/findregisBystatusPass')
+async findregisBystatusPass() {
+  return this.companyService.findregisBystatusPass();
+}
+@Get('/findregisBystatusNotpass')
+async findregisBystatusNotpass() {
+  return this.companyService.findregisBystatusNotpass();
+}
 @Post('/uploadOne/:id')
 @UseInterceptors(
   FileInterceptor('image', {

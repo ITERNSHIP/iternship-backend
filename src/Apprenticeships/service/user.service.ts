@@ -265,7 +265,8 @@ const result = await this.userRepository.findOneBy({
     }
         const jwt = await this.jwtService.signAsync({id: user.userId},{secret:process.env.JWT_SECRET,expiresIn:'1d'});
     return {
-      accessToken:jwt
+      accessToken:jwt,
+      logoutToken:response.data.token.token
   };
   }
 
