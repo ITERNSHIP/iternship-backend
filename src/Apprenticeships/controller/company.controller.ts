@@ -170,7 +170,7 @@ return this.companyService.login(req,response);
 async logout(@Response({passthrough: true}) response: Response) {
 return this.companyService.logout(response);
 }
-@Get(':imgpath')
+@Get('/getpic/:imgpath')
 seeUploadedFile(@Param('imgpath') image, @Res() res) {
   return res.sendFile(image, { root: './files' });
 }

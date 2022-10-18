@@ -26,7 +26,8 @@ export class CompanyModule implements NestModule {
       .apply(CompanyMiddleware)
       .exclude({ path: 'company/login', method: RequestMethod.POST },
       { path: 'company/logout', method: RequestMethod.POST },
-      { path: 'company/cnstaff', method: RequestMethod.POST }
+      { path: 'company/cnstaff', method: RequestMethod.POST },
+      { path: 'company/getpic/:imgpath', method: RequestMethod.GET }
       )
       .forRoutes(CompanyController);
   }

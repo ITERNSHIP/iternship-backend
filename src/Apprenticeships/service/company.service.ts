@@ -311,7 +311,7 @@ const bcrypt = require('bcrypt');
       if(image==null || id==null){
         throw new NotAcceptableException;
       }
-      return this.companyRepository.createQueryBuilder().update(CompanyEntity).set({imageName: image}).
+      return this.companyRepository.createQueryBuilder().update(CompanyEntity).set({imageName: `${process.env.BASEURL}/company/getpic/${image}`}).
       where("companyId = :id", {id : id}).execute()
     }
   }
