@@ -48,6 +48,10 @@ jobs:
           echo DB_USR=${{ secrets.DB_USR }} >> .env
           echo DB_PASS=${{ secrets.DB_PASS }} >> .env
           echo DB=${{ secrets.DB_NAME }} >> .env
+          echo CLIENT_ID=${{ secrets.CLIENT_ID }} >> .env
+          echo CLIENT_SECRET=${{ secrets.CLIENT_SECRET }} >> .env
+          echo REDIRECT_URI=${{ secrets.REDIRECT_URI }} >> .env
+          echo BASEURL=${{ secrets.BASEURL }} >> .env
           
       - name: Build Docker image
         run : docker build . --file Dockerfile --tag ${{ secrets.DOCKER_HUB_USERNAME }}/iternship-back-end:latest
