@@ -14,8 +14,8 @@ export class InternshipNewsEntity {
   @Column({ name: 'newsDetail', nullable: false })
   newsDetail: string;
 
-  // @Column({ name: 'position', nullable: false })
-  // position: string;
+  @Column({ name: 'openDate', nullable: false,type: 'date'  })
+  openDate: string;
 
   // @Column({ name: 'income', nullable: false })
   // income: string;

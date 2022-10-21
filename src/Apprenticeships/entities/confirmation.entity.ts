@@ -15,11 +15,11 @@ export class ConfirmationEntity {
   @Column({ name: 'lastName', nullable: false,unique:false })
   lName: string;
 
-  @Column({ name: 'email', nullable: false,unique:true })
-  email: string;
+  // @Column({ name: 'email', nullable: false,unique:true })
+  // email: string;
 
-  @Column({ name: 'phoneNumber', nullable: false,unique:false })
-  phoneNumber: string;
+  // @Column({ name: 'phoneNumber', nullable: false,unique:false })
+  // phoneNumber: string;
 
   @Column({ name: 'companyName', nullable: false,unique:false })
   companyName: string;

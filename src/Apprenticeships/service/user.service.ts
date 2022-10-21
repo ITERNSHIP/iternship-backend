@@ -216,7 +216,7 @@ const result = await this.userRepository.findOneBy({
   }
   async findCompanyDetailById(companyId) {
     console.log(companyId)
-    const result = await this.companyRepository.createQueryBuilder("companys").select(["companys.companyName","companys.companyDetail"])
+    const result = await this.companyRepository.createQueryBuilder("companys").select(["companys.companyName","companys.companyDetail","companys.imageName",])
     .where("companys.companyId = :companyId", { companyId: companyId }).getMany()
     if (!result) {
       throw new NotFoundException();
