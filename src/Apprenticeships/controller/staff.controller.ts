@@ -43,7 +43,7 @@ export class StaffController {
   async findOneconfirmmation(@Param('id') id) {
   return this.staffService.findOneconfirmmation(id);
 }
-@Post('/add')
+@Post('/addnews')
 createnews(@Body() news: InternshipNewsEntity): Promise<InternshipNewsEntity> {
   return this.staffService.createNews(news);
 }
