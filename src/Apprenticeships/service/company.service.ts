@@ -228,7 +228,17 @@ const bcrypt = require('bcrypt');
     }
     async findregisByCompanyName(companyName) {
       const result = await this.RegisterRepository.createQueryBuilder("regis").select()
-      .where("regis.companyName = :companyName", { companyName: companyName }).getMany()
+      .where("regis.companyName = :companyName AND regis.status = 'pending'"
+      , { companyName: companyName }).getMany()
+      if (!result) {
+        throw new NotFoundException();
+      }
+      return result
+    }
+    async findregisPass(companyName) {
+      const result = await this.RegisterRepository.createQueryBuilder("regis").select()
+      .where("regis.companyName = :companyName AND regis.status = 'pass'"
+      , { companyName: companyName }).getMany()
       if (!result) {
         throw new NotFoundException();
       }

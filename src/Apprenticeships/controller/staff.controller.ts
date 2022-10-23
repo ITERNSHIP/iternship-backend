@@ -85,6 +85,14 @@ return this.staffService.updateInternshipNews(news);
   async findOneconfirmationForm(@Param('id') id) {
   return this.staffService.findOneconfirmmation(id);
 }
+@Get('/findInformbyCompanyName')
+async findregisPass(@Query('companyName') companyName: any) {
+  return this.staffService.findInformbyCompanyName(companyName);
+}
+@Get('/findInformbyCompanyId')
+async findInformbyCompanyId(@Query('companyId') companyId: any) {
+  return this.staffService.findInformbyCompanyId(companyId);
+}
   @Post('/login')
   async login(@Body() req:any,   @Response({passthrough: true}) response: Response) {
   return this.staffService.login(req,response);

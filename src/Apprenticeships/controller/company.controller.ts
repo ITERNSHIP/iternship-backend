@@ -101,9 +101,14 @@ async findRecruitByCompanyId(@Query('companyId') companyId: any) {
 async findregisByCompanyId(@Query('companyName') companyName: any) {
   return this.companyService.findregisByCompanyName(companyName);
 }
+@Get('/findregisPass')
+async findregisPass(@Query('companyName') companyName: any) {
+  return this.companyService.findregisPass(companyName);
+}
 
-@Post('/updateRegisStatus/:id')
-async updateRegisStatus(@Param('id') id,@Body() request: any) {
+@Post('/updateRegisStatus')
+async updateRegisStatus(@Query('id') id,@Body() request: any) {
+  console.log(id)
   return this.companyService.updateRegisStatus(id,request);
 }
 

@@ -157,7 +157,31 @@ const bcrypt = require('bcrypt');
       async findAllRecruit(): Promise<RecruitingEntity[]> {
          return this.RecruitingRepository.find();
           }
-
+          
+      async findInformbyCompanyName(companyName) {
+        let statement:string =`SELECT c."companyName",c."companyId",c."imageName"
+                                FROM recruiting r
+                                INNER JOIN companys c
+                                ON r."companyCompanyId"=c."companyId"
+                                and  c."companyName" = '${companyName}'`
+        const result = await  this.InternshipNewsRepository.query(statement)
+        if (!result) {
+         throw new NotFoundException();
+           }
+          return result
+        }
+        async findInformbyCompanyId(companyId) {
+          let statement:string =`SELECT r."recruitId",r."title",r."endDate"
+          FROM recruiting r
+          INNER JOIN companys c
+          ON r."companyCompanyId"=c."companyId"
+          and c."companyId" = '${companyId}'`
+          const result = await  this.InternshipNewsRepository.query(statement)
+          if (!result) {
+           throw new NotFoundException();
+             }
+            return result
+          }
       async login(req:any,response:any){
         const staff = await this.staffRepository.findOneBy({
           email:req.email
