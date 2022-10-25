@@ -1,4 +1,5 @@
 import { Body, Controller, Delete, Get, Param, Post, Put,Response,Query } from '@nestjs/common';
+import { CompanyEntity } from '../entities/company.entity';
 import { ConfirmationEntity } from '../entities/confirmation.entity';
 import { InternshipNewsEntity } from '../entities/internshipNews.entity';
 import { RecruitingEntity } from '../entities/recruiting.entity';
@@ -92,6 +93,11 @@ async findregisPass(@Query('companyName') companyName: any) {
 @Get('/findInformbyCompanyId')
 async findInformbyCompanyId(@Query('companyId') companyId: any) {
   return this.staffService.findInformbyCompanyId(companyId);
+}
+
+@Get('/getAllCompany')
+async getAllCompany(): Promise<CompanyEntity[]> {
+  return this.staffService.getAllCompany();
 }
   @Post('/login')
   async login(@Body() req:any,   @Response({passthrough: true}) response: Response) {

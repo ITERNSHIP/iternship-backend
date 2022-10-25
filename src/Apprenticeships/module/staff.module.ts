@@ -9,13 +9,14 @@ import { StaffMiddleware } from '../middlewares/staff.middleware';
 import { ConfirmationEntity } from '../entities/confirmation.entity';
 import { InternshipNewsEntity } from '../entities/internshipNews.entity';
 import { RecruitingEntity } from '../entities/recruiting.entity';
+import { CompanyEntity } from '../entities/company.entity';
 
 
 
 @Module({
   controllers: [StaffController],
   providers: [StaffService,JwtService],
-  imports:[TypeOrmModule.forFeature([StaffEntity,RegisterEntity,ConfirmationEntity,InternshipNewsEntity,RecruitingEntity])],
+  imports:[TypeOrmModule.forFeature([StaffEntity,RegisterEntity,ConfirmationEntity,InternshipNewsEntity,RecruitingEntity,CompanyEntity])],
   exports:[StaffService]
 })
 export class StaffModule   

@@ -7,6 +7,7 @@ import { RegisterEntity } from '../entities/regis.entity';
 import { ConfirmationEntity } from '../entities/confirmation.entity';
 import { InternshipNewsEntity } from '../entities/internshipNews.entity';
 import { RecruitingEntity } from '../entities/recruiting.entity';
+import { CompanyEntity } from '../entities/company.entity';
 const bcrypt = require('bcrypt');
 
   
@@ -26,6 +27,9 @@ const bcrypt = require('bcrypt');
 
       @InjectRepository(RecruitingEntity)
       private RecruitingRepository: Repository<RecruitingEntity>,
+      
+      @InjectRepository(CompanyEntity)
+      private companyRepository: Repository<CompanyEntity>,
 
 
       private jwtService: JwtService
@@ -180,6 +184,15 @@ const bcrypt = require('bcrypt');
           if (!result) {
            throw new NotFoundException();
              }
+            return result
+          }
+          async getAllCompany() {
+            const result = await this.companyRepository.createQueryBuilder("companys").
+            select(["companys.companyId","companys.companyName","companys.imageName"])
+            .getMany()
+            if (!result) {
+              throw new NotFoundException();
+            }
             return result
           }
       async login(req:any,response:any){
