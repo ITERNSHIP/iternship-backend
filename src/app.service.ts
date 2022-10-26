@@ -6,6 +6,6 @@ export class AppService {
     return 'Hello World!';
   }
   healthChek(){
-    return 'Back-End is Healthy';
+    return 'Service is Healthy';
   }
 }
