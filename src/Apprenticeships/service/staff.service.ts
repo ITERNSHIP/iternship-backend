@@ -188,7 +188,7 @@ const bcrypt = require('bcrypt');
           }
           async getAllCompany() {
             const result = await this.companyRepository.createQueryBuilder("companys").
-            select(["companys.companyId","companys.companyName","companys.imageName"])
+            select(["companys.companyId","companys.companyName"," companys.imageName"])
             .getMany()
             if (!result) {
               throw new NotFoundException();

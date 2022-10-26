@@ -250,7 +250,7 @@ const result = await this.userRepository.findOneBy({
     return result
   }
   async findregisBystatusNotpass() {
-    const status = "notpass"
+    const status = "notPass"
     const result = await this.regisRepository.createQueryBuilder("regis").select()
     .where("regis.status = :status", { status: status }).getMany()
     if (!result) {
