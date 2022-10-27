@@ -105,16 +105,16 @@ async findRecruitByCompanyId(@Query('companyId') companyId: any) {
   return this.userService.findRecruitByCompanyId(companyId);
   }
   @Get('/findregisBystatusPending')
-async findregisBystatusPending() {
-  return this.userService.findregisBystatusPending();
+async findregisBystatusPending(@Query('userId') userId:any) {
+  return this.userService.findregisBystatusPending(userId);
 }
 @Get('/findregisBystatusPass')
-async findregisBystatusPass() {
-  return this.userService.findregisBystatusPass();
+async findregisBystatusPass(@Query('userId') userId:any) {
+  return this.userService.findregisBystatusPass(userId);
 }
 @Get('/findregisBystatusNotpass')
-async findregisBystatusNotpass() {
-  return this.userService.findregisBystatusNotpass();
+async findregisBystatusNotpass(@Query('userId') userId:any) {
+  return this.userService.findregisBystatusNotpass(userId);
 }
 // @Post('/login')
 // async login(@Body() req:any,   @Response({passthrough: true}) response: Response) {

@@ -231,28 +231,28 @@ const result = await this.userRepository.findOneBy({
     }
     return result
   }
-  async findregisBystatusPending() {
+  async findregisBystatusPending(userId) {
     const status = "pending"
     const result = await this.regisRepository.createQueryBuilder("regis").select()
-    .where("regis.status = :status", { status: status }).getMany()
+    .where("regis.status = :status AND regis.userUserId = :userUserId", { status: status,userUserId:userId }).getMany()
     if (!result) {
       throw new NotFoundException();
     }
     return result
   }
-  async findregisBystatusPass() {
+  async findregisBystatusPass(userId) {
     const status = "pass"
     const result = await this.regisRepository.createQueryBuilder("regis").select()
-    .where("regis.status = :status", { status: status }).getMany()
+    .where("regis.status = :status AND regis.userUserId = :userUserId", { status: status,userUserId:userId  }).getMany()
     if (!result) {
       throw new NotFoundException();
     }
     return result
   }
-  async findregisBystatusNotpass() {
+  async findregisBystatusNotpass(userId) {
     const status = "notPass"
     const result = await this.regisRepository.createQueryBuilder("regis").select()
-    .where("regis.status = :status", { status: status }).getMany()
+    .where("regis.status = :status AND regis.userUserId = :userUserId", { status: status,userUserId:userId  }).getMany()
     if (!result) {
       throw new NotFoundException();
     }
