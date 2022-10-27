@@ -15,11 +15,11 @@ export class ConfirmationEntity {
   @Column({ name: 'lastName', nullable: false,unique:false })
   lName: string;
 
-  @Column({ name: 'email', nullable: false,unique:true })
-  email: string;
+  // @Column({ name: 'email', nullable: false,unique:true })
+  // email: string;
 
-  @Column({ name: 'phoneNumber', nullable: false,unique:false })
-  phoneNumber: string;
+  // @Column({ name: 'phoneNumber', nullable: false,unique:false })
+  // phoneNumber: string;
 
   @Column({ name: 'companyName', nullable: false,unique:false })
   companyName: string;
@@ -30,10 +30,10 @@ export class ConfirmationEntity {
   @Column({ name: 'longTerm', nullable: false,unique:false })
   longTerm: string;
 
-  @Column({ name: 'durationForm', nullable: false,unique:false })
+  @Column({ name: 'durationForm', nullable: false,type: 'date' ,unique:false })
   durationForm: string;
 
-  @Column({ name: 'durationTo', nullable: false,unique:false })
+  @Column({ name: 'durationTo', nullable: false,type: 'date' ,unique:false })
   durationTo: string;
   
   @OneToOne(() => UserEntity,user => user.confirmation,{createForeignKeyConstraints: true})

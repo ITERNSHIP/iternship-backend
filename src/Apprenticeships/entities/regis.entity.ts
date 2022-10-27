@@ -1,5 +1,5 @@
 import { Column, Entity, PrimaryGeneratedColumn,ManyToOne,JoinColumn,OneToOne } from "typeorm";
-import { CompanyViewRegis } from "./companyViewRegis.entity";
+// import { CompanyViewRegis } from "./companyViewRegis.entity";
 import { UserEntity } from "./user.entity";
 
 @Entity('regis')
@@ -13,14 +13,17 @@ export class RegisterEntity {
   @Column({ name: 'lastName', nullable: false })
   lName: string;
 
-  @Column({ name: 'year', nullable: false })
-  year: string;
+  @Column({ name: 'gerder', nullable: false })
+  gender: string;
+
+  // @Column({ name: 'year', nullable: false })
+  // year: string;
 
   @Column({ name: 'phoneNumber', nullable: false })
   phoneNumber: string;
 
-  @Column({ name: 'semester', nullable: false })
-  semester: string;
+  // @Column({ name: 'semester', nullable: false })
+  // semester: string;
 
   @Column('decimal',{ name: 'grade', nullable: false,  precision: 10, scale: 7})
   grade: number;
@@ -40,12 +43,21 @@ export class RegisterEntity {
   @Column({ name: 'resume', nullable: false })
   resume: string;
 
+  @Column({ type: 'date' })
+  startDate: string;
+
+  @Column({ type: 'date' })
+  endDate: string;
+
+  @Column({ name: 'status', nullable: true})
+  status: string;
+  
   @ManyToOne(()=> UserEntity, user => user.regis,{onDelete:'CASCADE',eager:true,createForeignKeyConstraints: true})
   @JoinColumn()
   public user: UserEntity;
 
-  @OneToOne(() => CompanyViewRegis,cvr => cvr.regis,{createForeignKeyConstraints: false})
-  @JoinColumn()
-  public cvr:CompanyViewRegis[];
+  // @OneToOne(() => CompanyViewRegis,cvr => cvr.regis,{createForeignKeyConstraints: false})
+  // @JoinColumn()
+  // public cvr:CompanyViewRegis[];
 
 }
