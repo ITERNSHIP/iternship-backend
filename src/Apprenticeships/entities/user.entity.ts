@@ -10,12 +10,24 @@ export class UserEntity {
   @Column({ name: 'fullname', nullable: false,unique:false })
   fullName: string;
 
-  @Column({ name: 'email', nullable: false,unique:true })
+  @Column({ name: 'email', nullable: true,unique:true })
   email: string;
 
   @Column({ name: 'status', nullable: true ,unique:false,default:false})
   status: boolean;
   
+  @Column({ name: 'address', nullable: true ,unique:false,default:false})
+  address: string;
+
+  @Column({ name: 'phone', nullable: true ,unique:false,default:false})
+  phone: string;
+
+  @Column({ name: 'gender', nullable: true ,unique:false,default:false})
+  gender: string;
+
+  @Column({ name: 'resumeLink', nullable: true ,unique:false,default:false})
+  resumeLink: string;
+
   @OneToMany(() => RegisterEntity,regis => regis.user,{createForeignKeyConstraints: true})
   @JoinColumn()
   public regis:RegisterEntity[];

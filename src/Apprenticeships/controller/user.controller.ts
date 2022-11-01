@@ -72,7 +72,7 @@ export class UserController {
   return this.userService.findOneconfirmationForm(id);
 }
 @Get('/getAllRecruit')
-async findAllRecruit(): Promise<RecruitingEntity[]> {
+async findAllRecruit() {
   return this.userService.findAllRecruit();
 }
 
@@ -95,6 +95,10 @@ return this.userService.findOneNews(id);
 @Get('/getAllCompany')
 async getAllCompany(): Promise<CompanyEntity[]> {
   return this.userService.getAllCompany();
+}
+@Get('/getAllrecruitebyendDate')
+async getAllrecruitebyendDate(): Promise<CompanyEntity[]> {
+  return this.userService.getAllrecruitebyendDate();
 }
 @Get('/findCompanyDetailById')
   async findCompanyDetailByName(@Query('companyId') companyId: any) {

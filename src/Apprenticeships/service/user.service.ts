@@ -178,8 +178,9 @@ const result = await this.userRepository.findOneBy({
     // return this.regisRepository.createQueryBuilder("regis").leftJoinAndSelect('regis.user', 'user').where("regis.regisId = :id ",{id:regisId}).getMany()
     return await this.confirmationRepository.find(confirmationId);
   }
-  async findAllRecruit(): Promise<RecruitingEntity[]> {
-    return this.RecruitingRepository.find();
+  async findAllRecruit() {
+    return this.RecruitingRepository.createQueryBuilder("recruiting").select()
+    .where(" DATE(recruiting.endDate) > DATE(NOW())").getMany()
   }
 
   async findOneRecruit(recruitId) {
@@ -206,9 +207,15 @@ const result = await this.userRepository.findOneBy({
   }
   
   async getAllCompany() {
-    // const result = await this.companyRepository.createQueryBuilder("companys").
-    // select(["companys.companyId","companys.companyName","companys.companyDetail","companys.imageName"])
-    // .getMany()
+    const result = await this.companyRepository.createQueryBuilder("companys").
+    select(["companys.companyId","companys.companyName","companys.companyDetail","companys.imageName"])
+    .getMany()
+    if (!result) {
+      throw new NotFoundException();
+    }
+    return result
+  }
+  async getAllrecruitebyendDate() {
     let statement:string =`select distinct companys."companyName", recruiting."title"
     from companys inner join recruiting 
     ON recruiting."companyCompanyId" = companys."companyId"
@@ -238,8 +245,9 @@ const result = await this.userRepository.findOneBy({
     return result
   }
   async findRecruitByCompanyId(companyId) {
-    const result = await this.RecruitingRepository.createQueryBuilder("recruiting").select()
-    .where("recruiting.companyCompanyId = :companyCompanyId", { companyCompanyId: companyId }).getMany()
+    const result = await this.RecruitingRepository.createQueryBuilder("recruiting")
+    .where(" DATE(recruiting.endDate) > DATE(NOW()) and recruiting.companyCompanyId = :companyCompanyId", { companyCompanyId: companyId })
+    .getMany()
     if (!result) {
       throw new NotFoundException();
     }
@@ -293,7 +301,7 @@ const result = await this.userRepository.findOneBy({
     .insert()
     .into(UserEntity)
     .values([
-        {userId : response.data.user_id, fullName: response.data.name_th,email:response.data.email }
+        {userId : response.data.user_id, fullName: response.data.name_th }
 
     ])
     .execute()
@@ -301,7 +309,7 @@ const result = await this.userRepository.findOneBy({
       await this.userRepository
     .createQueryBuilder()
     .update(UserEntity)
-    .set({ userId : response.data.user_id, fullName: response.data.name_th,email:response.data.email })
+    .set({ userId : response.data.user_id, fullName: response.data.name_th })
     .where("userId = :userId", { userId: response.data.user_id })
     .execute()
     }
@@ -309,6 +317,7 @@ const result = await this.userRepository.findOneBy({
     return {
       accessToken:jwt,
       userId:response.data.user_id,
+      fullName:response.data.name_en
   };
   }
 
