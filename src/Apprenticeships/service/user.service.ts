@@ -206,13 +206,27 @@ const result = await this.userRepository.findOneBy({
   }
   
   async getAllCompany() {
-    const result = await this.companyRepository.createQueryBuilder("companys").
-    select(["companys.companyId","companys.companyName","companys.companyDetail","companys.imageName"])
-    .getMany()
+    // const result = await this.companyRepository.createQueryBuilder("companys").
+    // select(["companys.companyId","companys.companyName","companys.companyDetail","companys.imageName"])
+    // .getMany()
+    let statement:string =`select distinct companys."companyName", recruiting."title"
+    from companys inner join recruiting 
+    ON recruiting."companyCompanyId" = companys."companyId"
+    where recruiting."title" != ''
+    and DATE(recruiting."endDate") > DATE(NOW())
+    order by companys."companyName"`
+    const result = await  this.InternshipNewsRepository.query(statement)
+    var groupBy = function(xs, key) {
+      return xs.reduce(function(rv, x) {
+        (rv[x[key]] = rv[x[key]] || []).push(x);
+        return rv;
+      }, {});
+    };
+  const formatResult = groupBy(result,'companyName')
     if (!result) {
       throw new NotFoundException();
     }
-    return result
+    return formatResult
   }
   async findCompanyDetailById(companyId) {
     console.log(companyId)
@@ -272,6 +286,7 @@ const result = await this.userRepository.findOneBy({
     const user = await this.userRepository.findOneBy({
       userId:response.data.user_id
     })
+    console.log(response.data)
     if(!user){
       await this.userRepository
     .createQueryBuilder()

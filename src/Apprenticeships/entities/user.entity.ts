@@ -6,12 +6,6 @@ import { RegisterEntity } from "./regis.entity";
 export class UserEntity {
   @PrimaryColumn()
   userId: string;
-
-  // @Column({ name: 'userName', nullable: false,unique:true })
-  // userName: string;
-
-  // @Column({ name: 'password', nullable: false,unique:false })
-  // password: string;
   
   @Column({ name: 'fullname', nullable: false,unique:false })
   fullName: string;
