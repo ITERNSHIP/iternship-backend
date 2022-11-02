@@ -16,16 +16,16 @@ export class UserEntity {
   @Column({ name: 'status', nullable: true ,unique:false,default:false})
   status: boolean;
   
-  @Column({ name: 'address', nullable: true ,unique:false,default:false})
+  @Column({ name: 'address', nullable: true ,unique:false})
   address: string;
 
-  @Column({ name: 'phone', nullable: true ,unique:false,default:false})
+  @Column({ name: 'phone', nullable: true ,unique:false})
   phone: string;
 
-  @Column({ name: 'gender', nullable: true ,unique:false,default:false})
+  @Column({ name: 'gender', nullable: true ,unique:false})
   gender: string;
 
-  @Column({ name: 'resumeLink', nullable: true ,unique:false,default:false})
+  @Column({ name: 'resumeLink', nullable: true ,unique:false})
   resumeLink: string;
 
   @OneToMany(() => RegisterEntity,regis => regis.user,{createForeignKeyConstraints: true})
