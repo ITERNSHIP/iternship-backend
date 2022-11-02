@@ -295,7 +295,7 @@ const result = await this.userRepository.findOneBy({
     const user = await this.userRepository.findOneBy({
       userId:response.data.user_id
     })
-    console.log(response.data)
+    console.log(user)
     if(!user){
       await this.userRepository
     .createQueryBuilder()
@@ -303,7 +303,6 @@ const result = await this.userRepository.findOneBy({
     .into(UserEntity)
     .values([
         {userId : response.data.user_id, fullName: response.data.name_th }
-
     ])
     .execute()
     }else{
@@ -314,7 +313,7 @@ const result = await this.userRepository.findOneBy({
     .where("userId = :userId", { userId: response.data.user_id })
     .execute()
     }
-        const jwt = await this.jwtService.signAsync({id: user.userId},{secret:process.env.JWT_SECRET,expiresIn:'1d'});
+        const jwt = await this.jwtService.signAsync({id: response.data.user_id},{secret:process.env.JWT_SECRET,expiresIn:'1d'});
     return {
       accessToken:jwt,
       userId:response.data.user_id,
