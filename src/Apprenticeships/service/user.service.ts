@@ -72,21 +72,20 @@ const result = await this.userRepository.findOneBy({
     return result
   }
 
-  // async update(user: UserEntity) {
-  //   try {
-  //     if (!user.userId) {
-  //       throw new ForbiddenException();
-  //     }
-  //     user.password = await bcrypt.hash(user.password, 10);
-  //     await this.userRepository.update(user.userId, user);
-  //     return {
-  //       status: "success",
-  //       message: "Update Success",
-  //     };
-  //   } catch (err) {
-  //     return err;
-  //   }
-  // }
+  async update(user: UserEntity) {
+    try {
+      if (!user.userId) {
+        throw new ForbiddenException();
+      }
+      await this.userRepository.update(user.userId, user);
+      return {
+        status: "success",
+        message: "Update Success",
+      };
+    } catch (err) {
+      return err;
+    }
+  }
 
   async delete(id) {
     try {

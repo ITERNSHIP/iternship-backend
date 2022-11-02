@@ -29,10 +29,10 @@ export class UserController {
 
 }
 
-  // @Put('/update/:id')
-  // async update(@Param('id') id:string, @Body() user: UserEntity): Promise<any>{
-  //   return this.userService.update(user);
-  // }
+  @Put('/update/:id')
+  async update(@Param('id') id:string, @Body() user: UserEntity): Promise<any>{
+    return this.userService.update(user);
+  }
 
   @Delete('/delete/:id')
   async delete(@Param('id') id): Promise<any> {
