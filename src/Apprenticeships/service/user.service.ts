@@ -179,7 +179,8 @@ const result = await this.userRepository.findOneBy({
     return await this.confirmationRepository.find(confirmationId);
   }
   async findAllRecruit() {
-    return this.RecruitingRepository.createQueryBuilder("recruiting").select()
+    return this.RecruitingRepository.createQueryBuilder("recruiting")
+    .innerJoinAndSelect("recruiting.company","company")
     .where(" DATE(recruiting.endDate) > DATE(NOW())").getMany()
   }
 
