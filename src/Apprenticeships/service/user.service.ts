@@ -73,7 +73,6 @@ const result = await this.userRepository.findOneBy({
   }
 
   async update(user: UserEntity) {
-    try {
       if (!user.userId) {
         throw new ForbiddenException();
       }
@@ -82,9 +81,7 @@ const result = await this.userRepository.findOneBy({
         status: "success",
         message: "Update Success",
       };
-    } catch (err) {
-      return err;
-    }
+
   }
 
   async delete(id) {
