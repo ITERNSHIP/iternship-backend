@@ -21,9 +21,18 @@ export class UserEntity {
 
   @Column({ name: 'phone', nullable: true ,unique:false})
   phone: string;
+  
+  @Column({ name: 'year ', nullable: true ,unique:false})
+  year : string;
+
+  @Column({ name: 'faculty', nullable: true ,unique:false})
+  faculty: string;
 
   @Column({ name: 'gender', nullable: true ,unique:false})
   gender: string;
+
+  @Column('decimal',{ name: 'GPA', nullable: true,  precision: 10, scale: 7})
+  GPA: number;
 
   @Column({ name: 'resumeLink', nullable: true ,unique:false})
   resumeLink: string;

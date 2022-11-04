@@ -9,17 +9,14 @@ export class ConfirmationEntity {
   @Column("decimal",{ name: 'studentId', nullable: false,unique:true,precision: 16 })
   studentId: number;
 
-  @Column({ name: 'firstName', nullable: false,unique:false })
-  fName: string;
+  @Column({ name: 'fullName', nullable: false,unique:false })
+  fullName: string;
 
-  @Column({ name: 'lastName', nullable: false,unique:false })
-  lName: string;
+  @Column({ name: 'year', nullable: false,unique:true })
+  year: string;
 
-  // @Column({ name: 'email', nullable: false,unique:true })
-  // email: string;
-
-  // @Column({ name: 'phoneNumber', nullable: false,unique:false })
-  // phoneNumber: string;
+  @Column({ name: 'faculty', nullable: false,unique:false })
+  faculty: string;
 
   @Column({ name: 'companyName', nullable: false,unique:false })
   companyName: string;
