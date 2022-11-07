@@ -62,11 +62,61 @@ const bcrypt = require('bcrypt');
             obj.status = true
             this.companyRepository.save(obj)
         }
-else{
-    obj.status = false
-    this.companyRepository.save(obj)
-}        
+        else{
+            obj.status = false
+            this.companyRepository.save(obj)
+        }     
+        return {
+          message:"Suspend Account success" 
+        }   
       }
+
+      async unSuspendAccount(id) {
+        const obj =   await this.companyRepository.findOne(
+            { where:
+                { companyId: id }
+            })
+        if(obj.status === true){
+            obj.status = false
+            this.companyRepository.save(obj)
+        }
+        else{
+            obj.status = true
+            this.companyRepository.save(obj)
+        }     
+        return {
+          message:"Unsuspend Account success" 
+        }   
+      }
+
+      async getAllCompany() {
+        const result = await this.companyRepository.createQueryBuilder("companys").
+        select(["companys.companyId","companys.companyName","companys.contactName","companys.phoneNumber","companys.status"])
+        .getMany()
+        if (!result) {
+          throw new NotFoundException();
+        }
+        return result
+      }
+
+      async createStaff(staff: StaffEntity) {
+        try {
+          if (staff == null) {
+            throw new NotAcceptableException();
+          } else  {
+            staff.password = await bcrypt.hash(staff.password, 10);
+            await this.staffRepository.save(staff);
+            return {
+              status: "success",
+              message: "Create Staff Success",
+            };
+          }
+        
+        } catch (err) {
+          return err;
+        }
+      }
+
       async login(req:any,response:any){
 
 

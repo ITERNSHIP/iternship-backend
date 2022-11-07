@@ -16,14 +16,15 @@ import { JwtService } from '@nestjs/jwt';
   imports:[TypeOrmModule.forFeature([CompanyEntity,StaffEntity,AdminEntity])],
   exports:[AdminService]
 })
-export class AdminModule{
-//  implements NestModule {
-//   public configure(consumer: MiddlewareConsumer) {
-//     consumer
-//       .apply(AdminMiddleware)
-//       .exclude({ path: 'admin/login', method: RequestMethod.POST },
-//       { path: 'admin/logout', method: RequestMethod.POST }
-//       )
-//       .forRoutes(AdminController);
-//   }
+export class AdminModule
+ implements NestModule {
+  public configure(consumer: MiddlewareConsumer) {
+    consumer
+      .apply(AdminMiddleware)
+      .exclude({ path: 'admin/login', method: RequestMethod.POST },
+      { path: 'admin/logout', method: RequestMethod.POST },
+      { path: 'admin/add', method: RequestMethod.POST }
+      )
+      .forRoutes(AdminController);
+  }
 }

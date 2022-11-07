@@ -38,23 +38,7 @@ const bcrypt = require('bcrypt');
         return this.staffRepository.find();
       }
 
-    async create(staff: StaffEntity) {
-        try {
-          if (staff == null) {
-            throw new NotAcceptableException();
-          } else  {
-            staff.password = await bcrypt.hash(staff.password, 10);
-            await this.staffRepository.save(staff);
-            return {
-              status: "success",
-              message: "Create Staff Success",
-            };
-          }
-        
-        } catch (err) {
-          return err;
-        }
-      }
+
 
     async findOne(staffId) {
         const result = await this.staffRepository.findOneBy({

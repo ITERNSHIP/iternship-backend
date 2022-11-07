@@ -293,7 +293,9 @@ const bcrypt = require('bcrypt');
       if (!user) {
         throw new BadRequestException('invalid credentials');
     }
-  
+        if(user.status==true){
+          throw new BadRequestException('Your account has been suspended.');
+        }
     if (!await bcrypt.compare(req.password, user.password)) {
         throw new BadRequestException('invalid credentials');
     }
