@@ -1,4 +1,4 @@
-import { BadRequestException, ForbiddenException, NotAcceptableException, NotFoundException } from '@nestjs/common';
+import { BadRequestException, ForbiddenException, NotAcceptableException, NotFoundException, UnauthorizedException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { InjectRepository } from '@nestjs/typeorm';
 import {  Repository } from 'typeorm';
@@ -294,7 +294,7 @@ const bcrypt = require('bcrypt');
         throw new BadRequestException('invalid credentials');
     }
         if(user.status==true){
-          throw new BadRequestException('Your account has been suspended.');
+          throw new UnauthorizedException('Your account has been suspended.');
         }
     if (!await bcrypt.compare(req.password, user.password)) {
         throw new BadRequestException('invalid credentials');
