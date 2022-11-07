@@ -293,13 +293,12 @@ const bcrypt = require('bcrypt');
       if (!user) {
         throw new BadRequestException('invalid credentials');
     }
-        if(user.status==true){
-          throw new UnauthorizedException('Your account has been suspended.');
-        }
     if (!await bcrypt.compare(req.password, user.password)) {
         throw new BadRequestException('invalid credentials');
     }
-  
+    if(user.status==true){
+      throw new UnauthorizedException('Your account has been suspended.');
+    }
       const jwt = await this.jwtService.signAsync({id: user.companyId},{secret:process.env.JWT_SECRET,expiresIn:'1d'});
   
     // response.cookie('jwt', jwt);
