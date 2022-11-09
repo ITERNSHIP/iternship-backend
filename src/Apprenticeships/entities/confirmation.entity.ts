@@ -12,7 +12,7 @@ export class ConfirmationEntity {
   @Column({ name: 'fullName', nullable: false,unique:false })
   fullName: string;
 
-  @Column({ name: 'year', nullable: false,unique:true })
+  @Column({ name: 'year', nullable: false,unique:false })
   year: string;
 
   @Column({ name: 'faculty', nullable: false,unique:false })

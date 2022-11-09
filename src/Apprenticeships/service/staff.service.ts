@@ -163,6 +163,7 @@ const bcrypt = require('bcrypt');
           FROM recruiting r
           INNER JOIN companys c
           ON r."companyCompanyId"=c."companyId"
+          where DATE(r."endDate") > DATE(NOW())
           and c."companyId" = '${companyId}'`
           const result = await  this.InternshipNewsRepository.query(statement)
           if (!result) {

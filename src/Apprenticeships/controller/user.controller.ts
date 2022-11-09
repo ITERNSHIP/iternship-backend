@@ -13,10 +13,10 @@ import { UserService } from '../service/user.service';
 export class UserController {
   constructor(private userService: UserService){}
 
-  // @Post('/add')
-  // create(@Body() user: UserEntity): Promise<UserEntity> {
-  //   return this.userService.create(user);
-  // }
+  @Post('/add')
+  create(@Body() user: UserEntity): Promise<UserEntity> {
+    return this.userService.create(user);
+  }
 
   @Get('/get')
   async findAll(): Promise<UserEntity[]> {

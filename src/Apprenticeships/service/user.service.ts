@@ -40,23 +40,22 @@ export class UserService {
     private jwtService: JwtService
   ) {}
 
-  // async create(user: UserEntity) {
-  //   try {
-  //     if (user == null) {
-  //       throw new NotAcceptableException();
-  //     } else if (user.status == null) {
-  //       user.status = false;
-  //     }
-  //     user.password = await bcrypt.hash(user.password, 10);
-  //     await this.userRepository.save(user);
-  //     return {
-  //       status: "success",
-  //       message: "Create User Success",
-  //     };
-  //   } catch (err) {
-  //     return err;
-  //   }
-  // }
+  async create(user: UserEntity) {
+    try {
+      if (user == null) {
+        throw new NotAcceptableException();
+      } else if (user.status == null) {
+        user.status = false;
+      }
+      await this.userRepository.save(user);
+      return {
+        status: "success",
+        message: "Create User Success",
+      };
+    } catch (err) {
+      return err;
+    }
+  }
   async findAll(): Promise<UserEntity[]> {
     return this.userRepository.find();
   }
@@ -233,7 +232,6 @@ const result = await this.userRepository.findOneBy({
     return formatResult
   }
   async findCompanyDetailById(companyId) {
-    console.log(companyId)
     const result = await this.companyRepository.createQueryBuilder("companys").select(["companys.companyName","companys.companyDetail","companys.imageName",])
     .where("companys.companyId = :companyId", { companyId: companyId }).getMany()
     if (!result) {
@@ -291,7 +289,6 @@ const result = await this.userRepository.findOneBy({
     const user = await this.userRepository.findOneBy({
       userId:response.data.user_id
     })
-    console.log(user)
     if(!user){
       await this.userRepository
     .createQueryBuilder()
