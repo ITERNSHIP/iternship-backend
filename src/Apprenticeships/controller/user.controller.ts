@@ -13,10 +13,10 @@ import { UserService } from '../service/user.service';
 export class UserController {
   constructor(private userService: UserService){}
 
-  // @Post('/add')
-  // create(@Body() user: UserEntity): Promise<UserEntity> {
-  //   return this.userService.create(user);
-  // }
+  @Post('/add')
+  create(@Body() user: UserEntity): Promise<UserEntity> {
+    return this.userService.create(user);
+  }
 
   @Get('/get')
   async findAll(): Promise<UserEntity[]> {
@@ -29,10 +29,10 @@ export class UserController {
 
 }
 
-  // @Put('/update/:id')
-  // async update(@Param('id') id:string, @Body() user: UserEntity): Promise<any>{
-  //   return this.userService.update(user);
-  // }
+  @Put('/update/:id')
+  async update(@Param('id') id:string, @Body() user: UserEntity): Promise<any>{
+    return this.userService.update(user);
+  }
 
   @Delete('/delete/:id')
   async delete(@Param('id') id): Promise<any> {
@@ -72,7 +72,7 @@ export class UserController {
   return this.userService.findOneconfirmationForm(id);
 }
 @Get('/getAllRecruit')
-async findAllRecruit(): Promise<RecruitingEntity[]> {
+async findAllRecruit() {
   return this.userService.findAllRecruit();
 }
 
@@ -96,6 +96,10 @@ return this.userService.findOneNews(id);
 async getAllCompany(): Promise<CompanyEntity[]> {
   return this.userService.getAllCompany();
 }
+@Get('/getAllrecruitebyendDate')
+async getAllrecruitebyendDate(): Promise<CompanyEntity[]> {
+  return this.userService.getAllrecruitebyendDate();
+}
 @Get('/findCompanyDetailById')
   async findCompanyDetailByName(@Query('companyId') companyId: any) {
     return this.userService.findCompanyDetailById(companyId);
@@ -105,16 +109,16 @@ async findRecruitByCompanyId(@Query('companyId') companyId: any) {
   return this.userService.findRecruitByCompanyId(companyId);
   }
   @Get('/findregisBystatusPending')
-async findregisBystatusPending() {
-  return this.userService.findregisBystatusPending();
+async findregisBystatusPending(@Query('userId') userId:any) {
+  return this.userService.findregisBystatusPending(userId);
 }
 @Get('/findregisBystatusPass')
-async findregisBystatusPass() {
-  return this.userService.findregisBystatusPass();
+async findregisBystatusPass(@Query('userId') userId:any) {
+  return this.userService.findregisBystatusPass(userId);
 }
 @Get('/findregisBystatusNotpass')
-async findregisBystatusNotpass() {
-  return this.userService.findregisBystatusNotpass();
+async findregisBystatusNotpass(@Query('userId') userId:any) {
+  return this.userService.findregisBystatusNotpass(userId);
 }
 // @Post('/login')
 // async login(@Body() req:any,   @Response({passthrough: true}) response: Response) {

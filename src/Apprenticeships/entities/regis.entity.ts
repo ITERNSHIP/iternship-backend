@@ -7,13 +7,10 @@ export class RegisterEntity {
   @PrimaryGeneratedColumn()
   regisId: number;
 
-  @Column({ name: 'firstName', nullable: false })
-  fName: string;
+  @Column({ name: 'fullName', nullable: false })
+  fullName: string;
 
-  @Column({ name: 'lastName', nullable: false })
-  lName: string;
-
-  @Column({ name: 'gerder', nullable: false })
+  @Column({ name: 'gender', nullable: false })
   gender: string;
 
   // @Column({ name: 'year', nullable: false })
@@ -43,11 +40,11 @@ export class RegisterEntity {
   @Column({ name: 'resume', nullable: false })
   resume: string;
 
-  @Column({ type: 'date' })
-  startDate: string;
+  // @Column({ type: 'date' })
+  // startDate: string;
 
-  @Column({ type: 'date' })
-  endDate: string;
+  // @Column({ type: 'date' })
+  // endDate: string;
 
   @Column({ name: 'status', nullable: true})
   status: string;

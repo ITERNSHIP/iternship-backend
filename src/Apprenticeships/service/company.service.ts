@@ -1,4 +1,4 @@
-import { BadRequestException, ForbiddenException, NotAcceptableException, NotFoundException } from '@nestjs/common';
+import { BadRequestException, ForbiddenException, NotAcceptableException, NotFoundException, UnauthorizedException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { InjectRepository } from '@nestjs/typeorm';
 import {  Repository } from 'typeorm';
@@ -293,11 +293,12 @@ const bcrypt = require('bcrypt');
       if (!user) {
         throw new BadRequestException('invalid credentials');
     }
-  
     if (!await bcrypt.compare(req.password, user.password)) {
         throw new BadRequestException('invalid credentials');
     }
-  
+    if(user.status==true){
+      throw new UnauthorizedException('Your account has been suspended.');
+    }
       const jwt = await this.jwtService.signAsync({id: user.companyId},{secret:process.env.JWT_SECRET,expiresIn:'1d'});
   
     // response.cookie('jwt', jwt);

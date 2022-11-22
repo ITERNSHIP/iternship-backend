@@ -13,11 +13,6 @@ import { StaffService } from '../service/staff.service';
 export class StaffController {
   constructor(private staffService: StaffService){}
 
-  @Post('/add')
-  create(@Body() staff: StaffEntity): Promise<StaffEntity> {
-    return this.staffService.create(staff);
-  }
-
     @Get('/getallstaff')
     async findAll(): Promise<StaffEntity[]> {
       return this.staffService.findAll();

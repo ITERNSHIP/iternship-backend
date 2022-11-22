@@ -38,23 +38,7 @@ const bcrypt = require('bcrypt');
         return this.staffRepository.find();
       }
 
-    async create(staff: StaffEntity) {
-        try {
-          if (staff == null) {
-            throw new NotAcceptableException();
-          } else  {
-            staff.password = await bcrypt.hash(staff.password, 10);
-            await this.staffRepository.save(staff);
-            return {
-              status: "success",
-              message: "Create Staff Success",
-            };
-          }
-        
-        } catch (err) {
-          return err;
-        }
-      }
+
 
     async findOne(staffId) {
         const result = await this.staffRepository.findOneBy({
@@ -178,8 +162,8 @@ const bcrypt = require('bcrypt');
           let statement:string =`SELECT r."recruitId",r."title",r."endDate"
           FROM recruiting r
           INNER JOIN companys c
-          ON r."companyCompanyId"=c."companyId"
-          and c."companyId" = '${companyId}'`
+          ON r."companyCompanyId"=c."companyId" 
+          and c."companyId" = '${companyId}' where DATE(r."endDate") > DATE(NOW())`
           const result = await  this.InternshipNewsRepository.query(statement)
           if (!result) {
            throw new NotFoundException();
