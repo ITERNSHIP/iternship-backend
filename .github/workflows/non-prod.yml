@@ -125,9 +125,3 @@ jobs:
           with:
             name: Depcheck report
             path: ${{github.workspace}}/reports
-            
-        # - name: OWASP ZAP Baseline Scan
-        #   uses: zaproxy/action-baseline@v0.7.0
-        #   with:
-        #     token: ${{ secrets.GITHUB_TOKEN }}
-        #     target: 'https://api.iternship.net'
